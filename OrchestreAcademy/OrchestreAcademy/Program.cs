@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OrchestreAcademy
 {
@@ -6,7 +7,11 @@ namespace OrchestreAcademy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
+            var app = new App();
+            app.Kör();
+
+            Console.ReadKey();
         }
     }
 }
