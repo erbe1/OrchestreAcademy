@@ -7,11 +7,18 @@ namespace OrchestreAcademy
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
+            HamtaData hamtaData = new HamtaData();
+            SkrivMotor skrivMotor = new SkrivMotor();
+            List<string> instrument = hamtaData.VisaInstrument();
+            skrivMotor.SkrivLista(instrument);
+=======
 
             var app = new App();
             app.Kör();
 
             Console.ReadKey();
+>>>>>>> origin/master
         }
     }
 }
