@@ -8,7 +8,7 @@ namespace OrchestreAcademy
 {
     public class App
     {
-        HamtaData hamtadata = new HamtaData();
+        HämtaData hamtadata = new HämtaData();
 
         internal void Kör()
         {
@@ -36,6 +36,11 @@ namespace OrchestreAcademy
             //SkapaEvent();
 
             List<string> instrument = hamtadata.VisaInstrument(); //LIgger var?? + Inget innehåll i metoden
+
+            foreach (var item in instrument)
+            {
+                Console.WriteLine(item);
+            }
         }
 
         private void MusikerMeny()
