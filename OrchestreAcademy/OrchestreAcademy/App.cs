@@ -8,7 +8,7 @@ namespace OrchestreAcademy
 {
     public class App
     {
-        HamtaData hamtadata = new HamtaData();
+        HämtaData hamtadata = new HämtaData();
 
         internal void Kör()
         {

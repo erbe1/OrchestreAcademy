@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace OrchestreAcademy
 {
-    public class HamtaData
+    public class HämtaData
     {
         private string conString = "Server=(localdb)\\mssqllocaldb; Database=OrchesterAcademy";
 
