@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OrchestreAcademy
 {
@@ -6,7 +7,10 @@ namespace OrchestreAcademy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            HamtaData hamtaData = new HamtaData();
+            SkrivMotor skrivMotor = new SkrivMotor();
+            List<string> instrument = hamtaData.VisaInstrument();
+            skrivMotor.SkrivLista(instrument);
         }
     }
 }
