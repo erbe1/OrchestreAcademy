@@ -26,9 +26,6 @@ namespace OrchestreAcademy
 
                 while (reader.Read())
                 {                 
-                    
-                        
-                    
                     list.Add(reader.GetSqlString(0).Value);
                 }
                 return list;
