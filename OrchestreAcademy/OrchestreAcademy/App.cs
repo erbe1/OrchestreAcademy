@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrchestreAcademy.Domän;
 
 namespace OrchestreAcademy
 {
@@ -57,7 +58,7 @@ namespace OrchestreAcademy
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
             }
-            //skrivmotor.SkrivUtLista(textsträng);
+            skrivmotor.SkrivLista(textsträng, 2);
             Console.WriteLine();
 
             //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
@@ -78,22 +79,24 @@ namespace OrchestreAcademy
 
             //var val = Console.ReadKey(true).Key;
 
-            //switch (val)
-            //{
-            //    case ConsoleKey.A:
-            //        Console.Clear();
-            //        skrivmotor.SkrivUtLista(hämtadata.SeEnskildMusiker());
-            //        break;
-            //    case ConsoleKey.B:
-            //        Console.Clear();
-            //        skrivmotor.SkrivUtLista(hämtadata.SeTillgängligaInstrument());
-            //        break;
-            //    case ConsoleKey.C:
-            //        MusikerMeny();
-            //        break;
-            //    default:
-            //        break;
+            switch (val)
+            {
+                case ConsoleKey.A:
+                    Console.Clear();
+                    skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker(), 1);
+                    break;
+                case ConsoleKey.B:
+                    Console.Clear();
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 1);
+                    break;
+                case ConsoleKey.C:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
         }
+
         private void SeEnskildMusiker()
         {
             throw new NotImplementedException();

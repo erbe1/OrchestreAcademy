@@ -12,6 +12,6 @@ namespace OrchestreAcademy
         public string Förnamn { get; set; }
         public string Efternamn { get; set; }
         public string StadsNamn { get; set; }
-        public int TelefonNummer { get; set; }
+        public int Telefonnummer { get; set; }
     }
 }
