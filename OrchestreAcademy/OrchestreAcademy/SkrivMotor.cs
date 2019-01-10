@@ -7,15 +7,17 @@ namespace OrchestreAcademy
 {
     class SkrivMotor
     {
-     internal void SkrivLista(List<string> list)
+        internal void SkrivUtLista(List<string> lista)
         {
-            foreach (var item in list)
+            foreach (var item in lista)
             {
                 Console.WriteLine(item);
             }
         }
 
-        
-
+        internal void Skriv(string text = "")
+        {
+            Console.WriteLine(text);
+        }
     }
 }

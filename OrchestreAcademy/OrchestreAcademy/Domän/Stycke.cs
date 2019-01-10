@@ -8,6 +8,6 @@ namespace OrchestreAcademy
 {
     public class Stycke
     {
-        
+        public string StyckeNamn { get; set; }
     }
 }
