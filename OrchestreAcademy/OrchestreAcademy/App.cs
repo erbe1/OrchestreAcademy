@@ -56,7 +56,7 @@ namespace OrchestreAcademy
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
             }
-            skrivmotor.SkrivUtLista(textsträng);
+            skrivmotor.SkrivLista(textsträng, 2);
             Console.WriteLine();
 
             //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
@@ -81,11 +81,11 @@ namespace OrchestreAcademy
             {
                 case ConsoleKey.A:
                     Console.Clear();
-                    skrivmotor.SkrivUtLista(hämtadata.SeEnskildMusiker());
+                    skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker(), 1);
                     break;
                 case ConsoleKey.B:
                     Console.Clear();
-                    skrivmotor.SkrivUtLista(hämtadata.SeTillgängligaInstrument());
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 1);
                     break;
                 case ConsoleKey.C:
                     MusikerMeny();
