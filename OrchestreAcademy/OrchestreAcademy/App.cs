@@ -19,8 +19,9 @@ namespace OrchestreAcademy
         private void Huvudmeny()
         {
             //Skriv ut menyn med snyggfont osv
-
-            //SeAllaEvent();
+            skrivmotor.Skärmstorlek();
+            skrivmotor.Meny();
+            SeAllaEvent();
             ArrangörMeny();
             //MusikerMeny();
         }
