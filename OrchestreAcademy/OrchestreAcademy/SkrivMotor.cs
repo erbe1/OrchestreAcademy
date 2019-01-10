@@ -17,19 +17,18 @@ namespace OrchestreAcademy
 
         internal void Logga() //Finns risk att metoderna är lite röriga...
         {
-            Rubrik();
 
 
-            Console.WriteLine(@"        ,");
-            Console.WriteLine(@"        |\        __");
-            Console.WriteLine(@"        | |      |--|             __");
-            Console.WriteLine(@"        |/       |  |            |--|");
-            Console.WriteLine(@"       /|_      () ()            | ()");
-            Console.WriteLine(@"      //| \             |\      ()");
-            Console.WriteLine(@"     | \|_ |            | \");
-            Console.WriteLine(@"      \_|_/            ()  |");
-            Console.WriteLine(@"        |                  |");
-            Console.WriteLine(@"       @'                 ()");
+            //Console.WriteLine(@"        ,");
+            //Console.WriteLine(@"        |\        __");
+            //Console.WriteLine(@"        | |      |--|             __");
+            //Console.WriteLine(@"        |/       |  |            |--|");
+            //Console.WriteLine(@"       /|_      () ()            | ()");
+            //Console.WriteLine(@"      //| \             |\      ()");
+            //Console.WriteLine(@"     | \|_ |            | \");
+            //Console.WriteLine(@"      \_|_/            ()  |");
+            //Console.WriteLine(@"        |                  |");
+            //Console.WriteLine(@"       @'                 ()");
 
         }
 
@@ -60,14 +59,14 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Rubrik()
+        internal void Rubrik(string text)
         {
             Console.SetCursorPosition(70, 0);
-            Console.WriteLine("Huvudmeny");
-            Ram();
+            Console.WriteLine(text);
+            //Ram();
         }
 
-        internal void Meny()
+        internal void Meny() 
         {
             Console.SetCursorPosition(70, 35);
             Console.WriteLine("Menyval");
