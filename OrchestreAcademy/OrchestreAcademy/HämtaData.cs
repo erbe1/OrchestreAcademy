@@ -91,8 +91,39 @@ namespace OrchestreAcademy
                     };
                     list.Add(e);
                 }
+                list = list.OrderByDescending(x => x.Stycke).ToList();
                 return list;
             }
+        }
+
+        internal string HämtaRubrikFörEttEvent(int nummer)
+        {
+            string s = "";
+            
+            var sql = "SELECT EventId, Datum, StadNamn FROM Event WHERE EventId=@EventId";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("EventId", nummer));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Event>();
+
+
+                while (reader.Read())
+                {
+                    var e = new Event
+                    {                        
+                        Datum = reader.GetSqlDateTime(1).Value,
+                        StadNamn = reader.GetSqlString(2).Value
+                    };
+                    list.Add(e);
+                s = e.StadNamn + " " + e.Datum.ToString();
+                }
+            }
+            return s;
         }
 
         internal List<Person> InstrumentOchNivåFörEnskildaMusiker()

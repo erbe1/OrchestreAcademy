@@ -109,7 +109,8 @@ namespace OrchestreAcademy
 
         internal void Rubrik(string text)
         {
-            Console.SetCursorPosition(70, 0);
+
+            Console.SetCursorPosition(70-text.Length/2, 0);
             Console.WriteLine(text);
         }
 

@@ -53,7 +53,46 @@ namespace OrchestreAcademy
                 textsträng.Add(item.StadNamn);
                 textsträng.Add(item.Datum.ToString());
             }
+            bool korrektval = false;
+            do
+            {
             skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false );
+            string val = new string("");
+
+                val = Console.ReadLine().ToLower().Trim();
+                int nummer = new int();
+                if (Int32.TryParse(val, out nummer))
+                {
+                    SeAlltOmEttEvent(nummer);
+                    korrektval = true;
+                }
+                if (val == "h")
+                {
+                    Huvudmeny();
+                    korrektval = true;
+                }
+            } while (!korrektval);
+
+
+
+        }
+
+        private void SeAlltOmEttEvent(int nummer)
+        {
+            string rubrik = hämtadata.HämtaRubrikFörEttEvent(nummer);
+            List<string> menyvalslista = new List<string> { "Backa ett steg", "Huvudmeny" };
+
+            var lista = hämtadata.VisaAlltIEttEvent(nummer);
+            List<string> textsträng = new List<string>();
+
+
+            foreach (var item in lista)
+            {
+                textsträng.Add(item.Stycke);
+                textsträng.Add(item.Instrumet);
+                textsträng.Add(item.Namn);
+            }
+            skrivmotor.Skrivskärm(menyvalslista, rubrik, textsträng, 3);
             var val = Console.ReadKey();
             int i = int.Parse(val.KeyChar.ToString());
             switch (i)
@@ -62,18 +101,15 @@ namespace OrchestreAcademy
                     SeAllaEvent();
                     break;
                 case 2:
-                    ArrangörMeny();
+                    Huvudmeny();
                     break;
-                case 3:
-                    MusikerMeny();
-                    break;
+                
                 default:
                     break;
             }
 
-
-
         }
+
         private void ArrangörMeny()
         {
             List<string> menyvalslista = new List<string> { "Se mina event", "Skapa nytt event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
