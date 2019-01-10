@@ -13,6 +13,20 @@ namespace OrchestreAcademy
         const int topmarginal = 3;
         const int ramhöjd = 30;
 
+
+        List<string> logga = new List<string>
+            { @"        .",
+              @"        |\        __",
+              @"        | |      |--|             __",
+              @"        |/       |  |            |--|",
+              @"       /|_      () ()            | ()",
+              @"      //| \             |\      ()",
+              @"     | \|_ |            | \",
+              @"      \_|_/            ()  |",
+              @"        |                  |",
+              @"       @'                 ()"
+            };
+
         internal void Skriv(string text = "")
         {
             Console.WriteLine(text);
@@ -36,31 +50,24 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Skrivskärm(List<string> menyvalslista)
+        internal void Skrivskärm(List<string> menyvalslista, List<string> raminnehåll = null, int kolumner = 1)
         {
+            if (raminnehåll == null)
+            {
+                raminnehåll = logga;
+            }
             Skärmstorlek();
             Ram();
-            SkrivLista(Logga(), 1);
+            SkrivLista(raminnehåll, kolumner);
             Rubrik("Huvudmeny");
             Meny(menyvalslista);
         }
 
-        internal List<string> Logga()
-        {
-            List<string> logga = new List<string>
-            { @"        .",
-              @"        |\        __",
-              @"        | |      |--|             __",
-              @"        |/       |  |            |--|",
-              @"       /|_      () ()            | ()",
-              @"      //| \             |\      ()",
-              @"     | \|_ |            | \",
-              @"      \_|_/            ()  |",
-              @"        |                  |",
-              @"       @'                 ()"
-            };
-            return logga;
-        }
+        //internal List<string> Logga()
+        //{
+
+        //    return logga;
+        //}
 
         internal void Ram()
         {
@@ -122,7 +129,7 @@ namespace OrchestreAcademy
             Console.BufferWidth = 150;
             Console.BufferHeight = 50;
 
-            Logga();
+            //Logga();
         }
 
     }
