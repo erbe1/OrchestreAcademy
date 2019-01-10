@@ -14,30 +14,17 @@ namespace OrchestreAcademy
 
         internal void Kör()
         {
-            Event eventet = new Event();
-            eventet.EventId = 1;
-            List<Event> valtEvent = hämtadata.VisaAlltIEttEvent(eventet.EventId);
-            List<string> textLista = new List<string>();
-            
-            foreach (var item in valtEvent)
-            {
-                textLista.Add(item.EventId.ToString());
-                textLista.Add(item.Stycke);
-                textLista.Add(item.Namn);
-                textLista.Add(item.Instrumet);
-
-            }
-            skrivmotor.SkrivLista(textLista, 4);
             Huvudmeny();
         }
 
         private void Huvudmeny()
         {
             //Skriv ut menyn med snyggfont osv
-
+            skrivmotor.Skärmstorlek();
+            skrivmotor.Meny();
             SeAllaEvent();
             ArrangörMeny();
-            MusikerMeny();
+            //MusikerMeny();
         }
 
         private void SeAllaEvent()
@@ -46,18 +33,73 @@ namespace OrchestreAcademy
         }
         private void ArrangörMeny()
         {
-            SeAllaEvent();
-            //SeAllaMusiker();
+            //SeAllaEvent();
+            SeAllaMusiker();
             //SeAllaStycken();
+            //SeSättningar();
             //SkapaEvent();
 
-            List<string> instrument = hämtadata.VisaInstrument(); //LIgger var?? + Inget innehåll i metoden
         }
-
         private void MusikerMeny()
         {
             SeAllaEvent();
         }
+
+        private void SeAllaMusiker()
+        {
+            //Här skrivs musikerlistan ut, på något sätt
+            skrivmotor.Skriv("Tillgängliga musiker\n");
+            List<Person> personLista = hämtadata.VisaMusiker();
+            List<string> textsträng = new List<string>();
+            foreach (var item in personLista)
+            {
+                textsträng.Add(item.Förnamn);
+                textsträng.Add(item.Efternamn);
+            }
+            skrivmotor.SkrivUtLista(textsträng);
+            Console.WriteLine();
+
+            //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
+            //Gärna även ett val att gruppera musiker efter instrument. Allt ska givitvis skrivas
+            MenyOchVal();
+            
+
+            //SeAllaMusiker();
+            
+        }
+
+        private void MenyOchVal()
+        {
+            skrivmotor.Skriv("Gå vidare till:");
+            skrivmotor.Skriv("a) Se instrument och nivå för enskilda musiker");
+            skrivmotor.Skriv("b) Se tillgängliga instrument");
+            skrivmotor.Skriv("c) Tillbaka till musikermenyn\n");
+
+            var val = Console.ReadKey(true).Key;
+
+            switch (val)
+            {
+                case ConsoleKey.A:
+                    Console.Clear();
+                    skrivmotor.SkrivUtLista(hämtadata.SeEnskildMusiker());
+                    break;
+                case ConsoleKey.B:
+                    Console.Clear();
+                    skrivmotor.SkrivUtLista(hämtadata.SeTillgängligaInstrument());
+                    break;
+                case ConsoleKey.C:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SeEnskildMusiker()
+        {
+            throw new NotImplementedException();
+        }
+
 
     }
 }

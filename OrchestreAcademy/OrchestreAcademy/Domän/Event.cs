@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrchestreAcademy.Domän
+namespace OrchestreAcademy.Dom�n
 {
     class Event
     {
