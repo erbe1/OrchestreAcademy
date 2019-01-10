@@ -43,12 +43,15 @@ namespace OrchestreAcademy
         }
         private void MusikerMeny()
         {
-            SeAllaEvent();
+            List<string> menyvalslista = new List<string> { "x", "y", "z" };
+            skrivmotor.Skrivskärm(menyvalslista);
+
         }
 
         private void SeAllaMusiker()
         {
             //Här skrivs musikerlistan ut, på något sätt
+            //Det här skrivs in i fältet
             skrivmotor.Rubrik("Tillgängliga musiker\n");
             List<Person> personLista = hämtadata.VisaMusiker();
             List<string> textsträng = new List<string>();
@@ -62,9 +65,45 @@ namespace OrchestreAcademy
             skrivmotor.SkrivLista(textsträng, 3);
             Console.WriteLine();
 
+            //menyval och kub
+            List<string> menyvalslista = new List<string> { "x", "y", "z" };
+            skrivmotor.Skrivskärm(menyvalslista);
+            var val = Console.ReadKey(true).Key;
+
+            //Val i menyn
+            switch (val)
+            {
+                case ConsoleKey.A:
+                    Console.Clear();
+
+                    List<Person> instrumentlista = hämtadata.Instrumentlista();
+                    List<string> sträng = new List<string>();
+                    foreach (var item in personLista)
+                    {
+                        textsträng.Add(item.InstrumentNamn);
+                        textsträng.Add(item.Nivå.ToString());
+
+                    }
+                    skrivmotor.SkrivLista(sträng, 2);
+                    Console.WriteLine();
+                    break;
+                case ConsoleKey.B:
+                    Console.Clear();
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
+                    break;
+                case ConsoleKey.C:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
+
+            // det här ska läggas in i fältet
+
+
             //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
             //Gärna även ett val att gruppera musiker efter instrument. Allt ska givitvis skrivas
-            MenyOchVal();
+            
             
 
             //SeAllaMusiker();
