@@ -3,15 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrchestreAcademy.Domän;
 
 namespace OrchestreAcademy
 {
     public class App
     {
-        HamtaData hamtadata = new HamtaData();
+        HämtaData hämtadata = new HämtaData();
+        SkrivMotor skrivmotor = new SkrivMotor();
 
         internal void Kör()
         {
+            Event eventet = new Event();
+            eventet.EventId = 1;
+            List<Event> valtEvent = hämtadata.VisaAlltIEttEvent(eventet.EventId);
+            List<string> textLista = new List<string>();
+            
+            foreach (var item in valtEvent)
+            {
+                textLista.Add(item.EventId.ToString());
+                textLista.Add(item.Stycke);
+                textLista.Add(item.Namn);
+                textLista.Add(item.Instrumet);
+
+            }
+            skrivmotor.SkrivLista(textLista, 4);
             Huvudmeny();
         }
 
@@ -35,7 +51,7 @@ namespace OrchestreAcademy
             //SeAllaStycken();
             //SkapaEvent();
 
-            List<string> instrument = hamtadata.VisaInstrument(); //LIgger var?? + Inget innehåll i metoden
+            List<string> instrument = hämtadata.VisaInstrument(); //LIgger var?? + Inget innehåll i metoden
         }
 
         private void MusikerMeny()
