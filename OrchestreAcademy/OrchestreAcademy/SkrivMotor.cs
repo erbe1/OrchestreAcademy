@@ -59,7 +59,7 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Skrivskärm(List<string> menyvalslista, string rubrik = "Huvudmeny", List<string> raminnehåll = null, int kolumner = 1)
+        internal void Skrivskärm(List<string> menyvalslista, string rubrik = "Huvudmeny", List<string> raminnehåll = null, int kolumner = 1, bool standardMeny = true)
         {
             if (raminnehåll == null)
             {
@@ -69,7 +69,7 @@ namespace OrchestreAcademy
             Ram();
             SkrivLista(raminnehåll, kolumner);
             Rubrik(rubrik);
-            Meny(menyvalslista);
+            Meny(menyvalslista, standardMeny);
 
         }
 
@@ -113,12 +113,14 @@ namespace OrchestreAcademy
             Console.WriteLine(text);
         }
 
-        internal void Meny(List<string> menyvalslista)
+        internal void Meny(List<string> menyvalslista, bool standardMeny)
         {
             Console.SetCursorPosition(30, 35);
             Console.WriteLine("Menyval");
             int i = 1;
             int k = 30;
+            if (standardMeny)
+            {
             foreach (var item in menyvalslista)
             {
                 Console.SetCursorPosition(k, 36);
@@ -126,8 +128,21 @@ namespace OrchestreAcademy
                 k = item.Length + k + 5;
                 i++;
             }
+            }
+            else
+            {
+                foreach (var item in menyvalslista)
+                {
+                Console.SetCursorPosition(k, 36);
+                Console.Write(item);
+                k = item.Length + k + 5;
+                i++;
+                }
+
+            }
             Console.SetCursorPosition(30, 37);
             Console.Write("Ange ditt val: ");
+
         }
 
         internal void Skärmstorlek()

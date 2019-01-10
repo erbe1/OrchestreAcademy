@@ -19,7 +19,7 @@ namespace OrchestreAcademy
 
         private void Huvudmeny()
         {
-             List<string> menyvalslista = new List<string> { "Se alla event", "Se val för arrangörer", "Se val för musiker" };
+            List<string> menyvalslista = new List<string> { "Se alla event", "Se val för arrangörer", "Se val för musiker" };
             skrivmotor.Skrivskärm(menyvalslista);
 
             var val = Console.ReadKey();
@@ -42,7 +42,37 @@ namespace OrchestreAcademy
 
         private void SeAllaEvent()
         {
-            //Visa alla event
+
+            List<string> menyvalslista = new List<string> { "Vilket event vill du veta mer om?", "(H)uvudmeny" };
+
+            List<Event> eventen = hämtadata.VisaAllaEvent();
+            List<string> textsträng = new List<string>();
+            foreach (var item in eventen)
+            {
+                textsträng.Add(item.EventId.ToString());
+                textsträng.Add(item.StadNamn);
+                textsträng.Add(item.Datum.ToString());
+            }
+            skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false );
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    SeAllaEvent();
+                    break;
+                case 2:
+                    ArrangörMeny();
+                    break;
+                case 3:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
+
+
+
         }
         private void ArrangörMeny()
         {
@@ -124,7 +154,7 @@ namespace OrchestreAcademy
 
         private void VisaInstrumentOchNivåFörEnskildMusiker()
         {
-            List<string> instrumentochnivålista =  ListaAllaMusiker();
+            List<string> instrumentochnivålista = ListaAllaMusiker();
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", instrumentochnivålista, 2);
 

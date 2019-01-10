@@ -35,7 +35,7 @@ namespace OrchestreAcademy
 
         internal List<Event> VisaAllaEvent()
         {
-            var sql = "SELECT EventId Datum, StadNamn FROM Event";
+            var sql = "SELECT EventId, Datum, StadNamn FROM Event";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
