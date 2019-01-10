@@ -19,13 +19,25 @@ namespace OrchestreAcademy
 
         private void Huvudmeny()
         {
-            //Skriv ut menyn med snyggfont osv
-            List<string> menyvalslista = new List<string> { "Se alla event", "Se val för arrangörer", "Se val för musiker" };
+             List<string> menyvalslista = new List<string> { "Se alla event", "Se val för arrangörer", "Se val för musiker" };
             skrivmotor.Skrivskärm(menyvalslista);
-            
-            //SeAllaEvent();
-            //ArrangörMeny();
-            //MusikerMeny();
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    SeAllaEvent();
+                    break;
+                case 2:
+                    ArrangörMeny();
+                    break;
+                case 3:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void SeAllaEvent()
@@ -34,13 +46,42 @@ namespace OrchestreAcademy
         }
         private void ArrangörMeny()
         {
-            //SeAllaEvent();
-            SeAllaMusiker();
-            //SeAllaStycken();
-            //SeSättningar();
-            //SkapaEvent();
+            List<string> menyvalslista = new List<string> { "Se mina event", "Skapa nytt event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, "Arrangörsmeny");
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    SeMinaEvent();
+                    break;
+                case 2:
+                    SkapaEvent();
+                    break;
+                case 3:
+                    SeAllaMusiker();
+                    break;
+                case 4:
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+
 
         }
+
+        private void SkapaEvent()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SeMinaEvent()
+        {
+            throw new NotImplementedException();
+        }
+
         private void MusikerMeny()
         {
             List<string> menyvalslista = new List<string> { "x", "y", "z" };
@@ -54,26 +95,27 @@ namespace OrchestreAcademy
             //Det här skrivs in i fältet
             List<string> musikerlista = ListaAllaMusiker();
             List<string> menyvalslista = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, musikerlista, 4);
+            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker", musikerlista, 3);
 
 
             //Val i menyn
-            var val = Console.ReadKey(true).Key;
-            switch (val)
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
             {
-                case ConsoleKey.A:
+                case 1:
                     Console.Clear();
                     List<string> musikerlista2 = ListaAllaMusiker();
                     List<string> menyvalslista2 = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
-                    skrivmotor.Skrivskärm(menyvalslista2, musikerlista2, 2);
+                    skrivmotor.Skrivskärm(menyvalslista2, "Musiker att välja på", musikerlista2, 2);
                     VisaInstrumentOchNivåFörEnskildMusiker();
                     break;
-                case ConsoleKey.B:
+                case 2:
                     Console.Clear();
                     skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
                     break;
-                case ConsoleKey.C:
-                    MusikerMeny();
+                case 3:
+                    Huvudmeny();
                     break;
                 default:
                     break;
@@ -84,16 +126,17 @@ namespace OrchestreAcademy
         {
             List<string> instrumentochnivålista =  ListaAllaMusiker();
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, instrumentochnivålista, 2);
+            skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", instrumentochnivålista, 2);
 
-            var val = Console.ReadKey(true).Key;
-            switch (val)
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
             {
-                case ConsoleKey.A:
+                case 1:
                     Console.Clear();
                     ArrangörMeny();
                     break;
-                case ConsoleKey.B:
+                case 2:
                     Console.Clear();
                     Huvudmeny();
                     break;
@@ -101,8 +144,8 @@ namespace OrchestreAcademy
                     break;
             }
 
-            string musikerval =
-            VisaInstrumentOchNivåFörEnskildMusiker();
+            //int musikerval = int.Parse(Console.ReadLine());
+            //VisaInstrumentOchNivåFörEnskildMusiker();
         }
 
         private List<string> ListaInstrumentOchNivåFörEnskildMusiker()

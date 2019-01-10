@@ -42,25 +42,24 @@ namespace OrchestreAcademy
             Console.WriteLine(text);
         }
 
-        internal void SkrivLista(List<string> list, int j)
+        internal void SkrivLista(List<string> list, int kolumner)
         {
-            int l = 0;
-            for (int i = 0; i < list.Count / j; i++)
+            int listobjekt = 0;
+            
+            for (int rad = 0; rad < list.Count / kolumner; rad++)
             {
-                Console.SetCursorPosition(vänstermarginal + 3, topmarginal + l + 3);
-                string s = "";
-                for (int k = 0; k < j; k++)
+                Console.SetCursorPosition(vänstermarginal + 3, topmarginal + rad + 3);
+                string text = "";
+                for (int k = 0; k < kolumner; k++)
                 {
-
-                    s = s + list[l].PadRight(40);
-
-                    l++;
+                    text = text + list[listobjekt].PadRight(20);
+                    listobjekt++;
                 }
-                Console.Write(s);
+                Console.Write(text);
             }
         }
 
-        internal void Skrivskärm(List<string> menyvalslista, List<string> raminnehåll = null, int kolumner = 1, string rubrik = "Huvudmeny")
+        internal void Skrivskärm(List<string> menyvalslista, string rubrik = "Huvudmeny", List<string> raminnehåll = null, int kolumner = 1)
         {
             if (raminnehåll == null)
             {
