@@ -84,9 +84,43 @@ namespace OrchestreAcademy
 
         private void MusikerMeny()
         {
-            List<string> menyvalslista = new List<string> { "x", "y", "z" };
+            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista);
 
+            List<string> musikermedid = MusikerMedId();
+
+            skrivmotor.Skrivskärm(menyvalslista, "Musikermeny", musikermedid, 3);
+
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    SeMinaEvent();
+                    break;
+                case 2:
+                    SkapaEvent();
+                    break;
+                case 3:
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private List<string> MusikerMedId()
+        {
+            List<Person> musikerlista = hämtadata.MusikerMedId();
+            List<string> musikermedid = new List<string>();
+            foreach (var musiker in musikerlista)
+            {
+                musikermedid.Add(musiker.Id.ToString());
+                musikermedid.Add(musiker.Förnamn);
+                musikermedid.Add(musiker.Efternamn);
+            }
+            return musikermedid;
         }
 
         private void SeAllaMusiker()

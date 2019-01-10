@@ -60,8 +60,6 @@ namespace OrchestreAcademy
                 return list;
             }
 
-
-
         }
 
         internal List<Event> VisaAlltIEttEvent(int eventet)
@@ -98,6 +96,31 @@ namespace OrchestreAcademy
         internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
         {
             throw new NotImplementedException();
+        }
+
+        internal List<Person> MusikerMedId()
+        {
+            var sql = "SELECT PersonId, Förnamn, Efternamn FROM Person";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                var lista = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Förnamn = reader.GetSqlString(1).Value,
+                        Efternamn = reader.GetSqlString(2).Value
+                    };
+                    lista.Add(person);
+                }
+                return lista;
+            }
         }
 
         internal List<Person> VisaMusiker()

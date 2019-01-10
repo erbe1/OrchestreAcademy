@@ -73,12 +73,6 @@ namespace OrchestreAcademy
 
         }
 
-        //internal List<string> Logga()
-        //{
-
-        //    return logga;
-        //}
-
         internal void Ram()
         {
             
@@ -138,8 +132,6 @@ namespace OrchestreAcademy
             Console.SetWindowSize(150, 50);
             Console.BufferWidth = 150;
             Console.BufferHeight = 50;
-
-            //Logga();
         }
 
     }
