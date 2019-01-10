@@ -35,7 +35,7 @@ namespace OrchestreAcademy
 
         internal List<Event> VisaAllaEvent()
         {
-            var sql = "SELECT EventId Datum, StadNamn FROM Event";
+            var sql = "SELECT EventId, Datum, StadNamn FROM Event";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -59,8 +59,6 @@ namespace OrchestreAcademy
                 }
                 return list;
             }
-
-
 
         }
 
@@ -121,6 +119,31 @@ namespace OrchestreAcademy
                     list.Add(person);
                 }
                 return list;
+            }
+        }
+
+        internal List<Person> MusikerMedId()
+        {
+            var sql = "SELECT MusikerId, Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                var lista = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Förnamn = reader.GetSqlString(1).Value,
+                        Efternamn = reader.GetSqlString(2).Value
+                    };
+                    lista.Add(person);
+                }
+                return lista;
             }
         }
 
