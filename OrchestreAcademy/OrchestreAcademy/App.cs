@@ -115,13 +115,23 @@ namespace OrchestreAcademy
         private void MusikerMeny()
         {
             List<string> menyvalslista = new List<string> { "Vilket är ditt musiker id?" };
-            //skrivmotor.Skrivskärm(menyvalslista);
-
-            //List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
 
             List<string> musikermedid = MusikerMedId();
 
             skrivmotor.Skrivskärm(menyvalslista, "Musikermeny", musikermedid, 3, false);
+
+            int musikerId = int.Parse(Console.ReadLine());
+            MusikerMenyEfterValAvId(musikerId);
+        }
+
+        private void MusikerMenyEfterValAvId(int musikerId)
+        {
+            
+            List<string> musikernamn = MusikerNamn(musikerId);
+            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
+
+            
 
 
             var val = Console.ReadKey();
@@ -132,7 +142,7 @@ namespace OrchestreAcademy
                     SeMinaEvent();
                     break;
                 case 2:
-                    SkapaEvent();
+                    AnmälTillEvent();
                     break;
                 case 3:
                     Huvudmeny();
@@ -140,6 +150,24 @@ namespace OrchestreAcademy
                 default:
                     break;
             }
+
+        }
+
+
+        private void AnmälTillEvent()
+        {
+            throw new NotImplementedException();
+        }
+        private List<string> MusikerNamn(int musikerId)
+        {
+            List<Person> musikernamnlista = hämtadata.MusikerNamn(musikerId);
+            List<string> musikernamn = new List<string>();
+            foreach (var musiker in musikernamnlista)
+            {
+                musikernamn.Add(musiker.Förnamn);
+                musikernamn.Add(musiker.Efternamn);
+            }
+            return musikernamn;
         }
 
         private List<string> MusikerMedId()

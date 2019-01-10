@@ -153,6 +153,34 @@ namespace OrchestreAcademy
             }
         }
 
+        internal List<Person> MusikerNamn(int musikerId)
+        {
+            var sql = "SELECT Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId WHERE MusikerId=@musikerId";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("musikerId", musikerId));
+                SqlDataReader reader = command.ExecuteReader();
+
+                var lista = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        Förnamn = reader.GetSqlString(0).Value,
+                        Efternamn = reader.GetSqlString(1).Value,
+                    };
+
+                    lista.Add(person);
+                }
+                return lista;
+            }
+        }
+
         internal List<Person> SeEnskildMusiker()
         {
             var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
