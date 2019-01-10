@@ -8,18 +8,22 @@ namespace OrchestreAcademy
 {
     class SkrivMotor
     {
+        const int vänstermarginal = 30;
+        const int rambredd = 90;
+        const int topmarginal = 3;
+        const int ramhöjd = 30;
+
         internal void Skriv(string text = "")
         {
             Console.WriteLine(text);
         }
-
 
         internal void SkrivLista(List<string> list, int j)
         {
             int l = 0;
             for (int i = 0; i < list.Count / j; i++)
             {
-
+                Console.SetCursorPosition(vänstermarginal + 3, topmarginal + l + 3);
                 string s = "";
                 for (int k = 0; k < j; k++)
                 {
@@ -28,7 +32,7 @@ namespace OrchestreAcademy
 
                     l++;
                 }
-                Console.WriteLine(s);
+                Console.Write(s);
             }
         }
 
@@ -36,50 +40,50 @@ namespace OrchestreAcademy
         {
             Skärmstorlek();
             Ram();
+            SkrivLista(Logga(), 1);
             Rubrik("Huvudmeny");
             Meny(menyvalslista);
         }
 
-        internal void Logga() //Finns risk att metoderna är lite röriga...
+        internal List<string> Logga()
         {
-            //Rubrik();
-
-
-            //Console.WriteLine(@"        ,");
-            //Console.WriteLine(@"        |\        __");
-            //Console.WriteLine(@"        | |      |--|             __");
-            //Console.WriteLine(@"        |/       |  |            |--|");
-            //Console.WriteLine(@"       /|_      () ()            | ()");
-            //Console.WriteLine(@"      //| \             |\      ()");
-            //Console.WriteLine(@"     | \|_ |            | \");
-            //Console.WriteLine(@"      \_|_/            ()  |");
-            //Console.WriteLine(@"        |                  |");
-            //Console.WriteLine(@"       @'                 ()");
-
+            List<string> logga = new List<string>
+            { @"        .",
+              @"        |\        __",
+              @"        | |      |--|             __",
+              @"        |/       |  |            |--|",
+              @"       /|_      () ()            | ()",
+              @"      //| \             |\      ()",
+              @"     | \|_ |            | \",
+              @"      \_|_/            ()  |",
+              @"        |                  |",
+              @"       @'                 ()"
+            };
+            return logga;
         }
 
         internal void Ram()
         {
-            Console.SetCursorPosition(30, 3);
-            for (int i = 0; i < 90; i++)
+            Console.SetCursorPosition(vänstermarginal, topmarginal);
+            for (int i = 0; i < rambredd; i++)
             {
                 Console.Write("▄");
             }
 
             for (int i = 0; i < 30; i++)
             {
-                Console.SetCursorPosition(30, 4 + i);
+                Console.SetCursorPosition(vänstermarginal, topmarginal + 1 + i);
                 Console.WriteLine("█");
             }
 
             for (int i = 0; i < 30; i++)
             {
-                Console.SetCursorPosition(119, 4 + i);
+                Console.SetCursorPosition(vänstermarginal + rambredd - 1, topmarginal + 1 + i);
                 Console.WriteLine("█");
             }
 
-            Console.SetCursorPosition(30, 34);
-            for (int i = 0; i < 90; i++)
+            Console.SetCursorPosition(vänstermarginal, topmarginal + ramhöjd + 1);
+            for (int i = 0; i < rambredd; i++)
             {
                 Console.Write("▀");
             }
@@ -92,7 +96,7 @@ namespace OrchestreAcademy
             //Ram();
         }
 
-        internal void Meny(List<string> menyvalslista) 
+        internal void Meny(List<string> menyvalslista)
         {
             Console.SetCursorPosition(30, 35);
             Console.WriteLine("Menyval");
