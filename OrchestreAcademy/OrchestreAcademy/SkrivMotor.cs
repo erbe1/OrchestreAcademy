@@ -29,12 +29,12 @@ namespace OrchestreAcademy
               @"",
               @"",
               @"",
-              @"                  _  __ _  _     /\            _     ",
-              @"                 | |/ /| || |_  |/\|     /\   | |    ",
-              @"                 | ' /_  __  _|         /  \  | |__  ",
-              @"                 |  < _| || |_         / /\ \ | '_ \ ",
-              @"                 | . \_  __  _|       / ____ \| |_) |",
-              @"                 |_|\_\|_||_|        /_/    \_\_.__/ "
+              @"                      _  __ _  _     /\            _     ",
+              @"                     | |/ /| || |_  |/\|     /\   | |    ",
+              @"                     | ' /_  __  _|         /  \  | |__  ",
+              @"                     |  < _| || |_         / /\ \ | '_ \ ",
+              @"                     | . \_  __  _|       / ____ \| |_) |",
+              @"                     |_|\_\|_||_|        /_/    \_\_.__/ "
             };
 
         internal void Skriv(string text = "")
@@ -81,6 +81,7 @@ namespace OrchestreAcademy
 
         internal void Ram()
         {
+            
             Console.SetCursorPosition(vänstermarginal, topmarginal);
             for (int i = 0; i < rambredd; i++)
             {
@@ -133,7 +134,7 @@ namespace OrchestreAcademy
         {
             Console.SetWindowPosition(0, 0);
             Console.Clear();
-            Console.Title = "OrchestreAcademy";
+            Console.Title = "K# ^ Ab";
             Console.SetWindowSize(150, 50);
             Console.BufferWidth = 150;
             Console.BufferHeight = 50;
