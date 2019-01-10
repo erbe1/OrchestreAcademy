@@ -8,8 +8,12 @@ namespace OrchestreAcademy
 {
     public class App
     {
+<<<<<<< HEAD
         HämtaData hämtadata = new HämtaData();
         SkrivMotor skrivmotor = new SkrivMotor();
+=======
+        HamtaData hamtadata = new HamtaData();
+>>>>>>> origin/master
 
         internal void Kör()
         {
