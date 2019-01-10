@@ -35,7 +35,7 @@ namespace OrchestreAcademy
 
         internal List<Person> VisaMusiker()
         {
-            var sql = "SELECT Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            var sql = "SELECT Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -52,7 +52,8 @@ namespace OrchestreAcademy
                     var person = new Person
                     {
                         Förnamn = reader.GetSqlString(0).Value,
-                        Efternamn = reader.GetSqlString(1).Value
+                        Efternamn = reader.GetSqlString(1).Value,
+                        TelefonNummer = reader.GetSqlInt32(2).Value
                     };
 
                     list.Add(person);

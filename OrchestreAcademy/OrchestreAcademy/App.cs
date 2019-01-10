@@ -20,9 +20,10 @@ namespace OrchestreAcademy
         {
             //Skriv ut menyn med snyggfont osv
             skrivmotor.Skärmstorlek();
+            skrivmotor.Ram();
             skrivmotor.Meny();
-            SeAllaEvent();
-            ArrangörMeny();
+            //SeAllaEvent();
+            //ArrangörMeny();
             //MusikerMeny();
         }
 
@@ -54,12 +55,12 @@ namespace OrchestreAcademy
             {
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
+                textsträng.Add(item.TelefonNummer.ToString());
+
             }
-            skrivmotor.SkrivUtLista(textsträng);
-            Console.WriteLine();
+            skrivmotor.SkrivLista(textsträng);
 
             //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
-            //Gärna även ett val att gruppera musiker efter instrument. Allt ska givitvis skrivas
             MenyOchVal();
             
 
@@ -69,6 +70,7 @@ namespace OrchestreAcademy
 
         private void MenyOchVal()
         {
+            skrivmotor.Skriv();
             skrivmotor.Skriv("Gå vidare till:");
             skrivmotor.Skriv("a) Se instrument och nivå för enskilda musiker");
             skrivmotor.Skriv("b) Se tillgängliga instrument");
@@ -80,13 +82,16 @@ namespace OrchestreAcademy
             {
                 case ConsoleKey.A:
                     Console.Clear();
-                    skrivmotor.SkrivUtLista(hämtadata.SeEnskildMusiker());
+                    skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker());
+                    MenyOchVal();
                     break;
                 case ConsoleKey.B:
                     Console.Clear();
-                    skrivmotor.SkrivUtLista(hämtadata.SeTillgängligaInstrument());
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument());
+                    MenyOchVal();
                     break;
                 case ConsoleKey.C:
+                    Console.Clear();
                     MusikerMeny();
                     break;
                 default:

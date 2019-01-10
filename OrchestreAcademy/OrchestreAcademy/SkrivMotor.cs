@@ -11,7 +11,7 @@ namespace OrchestreAcademy
         {
             foreach (var item in list)
             {
-                Console.WriteLine(item);
+                Skriv(item);
             }
         }
 
@@ -58,6 +58,11 @@ namespace OrchestreAcademy
             {
                 Console.Write("▀");
             }
+        }
+
+        internal void Skriv(string text = "")
+        {
+            Console.WriteLine(text);
         }
 
         internal void Rubrik()
