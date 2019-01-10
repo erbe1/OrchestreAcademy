@@ -103,6 +103,7 @@ namespace OrchestreAcademy
             {
                 connection.Open();
 
+                        
                 SqlDataReader reader = command.ExecuteReader();
 
                 var list = new List<Person>();
@@ -114,7 +115,7 @@ namespace OrchestreAcademy
                     {
                         Förnamn = reader.GetSqlString(0).Value,
                         Efternamn = reader.GetSqlString(1).Value,
-                        TelefonNummer = reader.GetSqlInt32(2).Value
+                        Telefonnummer = reader.GetSqlInt32(2).Value
                     };
 
                     list.Add(person);
@@ -123,9 +124,31 @@ namespace OrchestreAcademy
             }
         }
 
-        internal List<string> SeEnskildMusiker()
+        internal List<Person> SeEnskildMusiker()
         {
-            throw new NotImplementedException();
+            var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Person>();
+
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        InstrumentNamn = reader.GetSqlString(0).Value,
+                        Nivå = reader.GetSqlInt32(1).Value
+                    };
+
+                    list.Add(person);
+                }
+
+                return list;
+            }
         }
 
         internal List<string> SeTillgängligaInstrument()

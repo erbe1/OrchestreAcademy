@@ -20,10 +20,9 @@ namespace OrchestreAcademy
         private void Huvudmeny()
         {
             //Skriv ut menyn med snyggfont osv
-            skrivmotor.Skärmstorlek();
-            skrivmotor.Ram();
-            skrivmotor.Rubrik("Huvudmeny");
-            skrivmotor.Meny();
+            List<string> menyvalslista = new List<string> { "Se alla event", "Se val för arrangörer", "Se val för musiker" };
+            skrivmotor.Skrivskärm(menyvalslista);
+            
             //SeAllaEvent();
             //ArrangörMeny();
             //MusikerMeny();
@@ -57,7 +56,7 @@ namespace OrchestreAcademy
             {
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
-                textsträng.Add(item.TelefonNummer.ToString());
+                textsträng.Add(item.Telefonnummer.ToString());
 
             }
             skrivmotor.SkrivLista(textsträng, 3);
@@ -85,11 +84,21 @@ namespace OrchestreAcademy
             {
                 case ConsoleKey.A:
                     Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker());
+                     
+                    List<Person> personLista = hämtadata.VisaMusiker();
+                    List<string> textsträng = new List<string>();
+                    foreach (var item in personLista)
+                    {
+                        textsträng.Add(item.InstrumentNamn);
+                        textsträng.Add(item.Nivå.ToString());
+
+                    }
+                    skrivmotor.SkrivLista(textsträng, 2);
+                    Console.WriteLine();
                     break;
                 case ConsoleKey.B:
                     Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument());
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
                     break;
                 case ConsoleKey.C:
                     MusikerMeny();

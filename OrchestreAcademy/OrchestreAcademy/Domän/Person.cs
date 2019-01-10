@@ -13,5 +13,9 @@ namespace OrchestreAcademy
         public string Efternamn { get; set; }
         public string StadsNamn { get; set; }
         public int Telefonnummer { get; set; }
+        public string InstrumentNamn { get; set; }
+        //public string InstrumentNamn2 { get; set; }
+        //public string InstrumentNamn3 { get; set; }
+        public int Nivå { get; set; }
     }
 }

@@ -32,9 +32,17 @@ namespace OrchestreAcademy
             }
         }
 
+        internal void Skrivskärm(List<string> menyvalslista)
+        {
+            Skärmstorlek();
+            Ram();
+            Rubrik("Huvudmeny");
+            Meny(menyvalslista);
+        }
+
         internal void Logga() //Finns risk att metoderna är lite röriga...
         {
-            Rubrik();
+            //Rubrik();
 
 
             //Console.WriteLine(@"        ,");
@@ -77,24 +85,27 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Rubrik()
+        internal void Rubrik(string text)
         {
             Console.SetCursorPosition(70, 0);
             Console.WriteLine(text);
             //Ram();
         }
 
-        internal void Meny() 
+        internal void Meny(List<string> menyvalslista) 
         {
-            Console.SetCursorPosition(70, 35);
+            Console.SetCursorPosition(30, 35);
             Console.WriteLine("Menyval");
-            Console.SetCursorPosition(60, 36);
-            Console.Write("1. XXXXXX");
-            Console.SetCursorPosition(70, 36);
-            Console.Write("2. YYYYYY");
-            Console.SetCursorPosition(80, 36);
-            Console.Write("3. ZZZZZZ");
-            Console.SetCursorPosition(60, 37);
+            int i = 1;
+            int k = 30;
+            foreach (var item in menyvalslista)
+            {
+                Console.SetCursorPosition(k, 36);
+                Console.Write($"{i}) {item}");
+                k = item.Length + k + 5;
+                i++;
+            }
+            Console.SetCursorPosition(30, 37);
             Console.Write("Ange ditt val: ");
         }
 
