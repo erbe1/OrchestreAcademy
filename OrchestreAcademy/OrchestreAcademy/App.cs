@@ -114,12 +114,14 @@ namespace OrchestreAcademy
 
         private void MusikerMeny()
         {
-            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista);
+            List<string> menyvalslista = new List<string> { "Vilket är ditt musiker id?" };
+            //skrivmotor.Skrivskärm(menyvalslista);
+
+            //List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
 
             List<string> musikermedid = MusikerMedId();
 
-            skrivmotor.Skrivskärm(menyvalslista, "Musikermeny", musikermedid, 3);
+            skrivmotor.Skrivskärm(menyvalslista, "Musikermeny", musikermedid, 3, false);
 
 
             var val = Console.ReadKey();

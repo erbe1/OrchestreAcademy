@@ -100,7 +100,7 @@ namespace OrchestreAcademy
 
         internal List<Person> MusikerMedId()
         {
-            var sql = "SELECT PersonId, Förnamn, Efternamn FROM Person";
+            var sql = "SELECT MusikerId, Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
