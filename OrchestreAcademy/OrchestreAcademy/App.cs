@@ -79,22 +79,22 @@ namespace OrchestreAcademy
 
             //var val = Console.ReadKey(true).Key;
 
-            switch (val)
-            {
-                case ConsoleKey.A:
-                    Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker(), 1);
-                    break;
-                case ConsoleKey.B:
-                    Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 1);
-                    break;
-                case ConsoleKey.C:
-                    MusikerMeny();
-                    break;
-                default:
-                    break;
-            }
+            //switch (val)
+            //{
+            //    case ConsoleKey.A:
+            //        Console.Clear();
+            //        skrivmotor.SkrivLista(hämtadata.SeEnskildMusiker(), 1);
+            //        break;
+            //    case ConsoleKey.B:
+            //        Console.Clear();
+            //        skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 1);
+            //        break;
+            //    case ConsoleKey.C:
+            //        MusikerMeny();
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void SeEnskildMusiker()
