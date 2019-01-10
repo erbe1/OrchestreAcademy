@@ -95,14 +95,38 @@ namespace OrchestreAcademy
             }
         }
 
-        internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
+        internal List<Person> InstrumentOchNivåFörEnskildaMusiker(int musiker)
         {
-            throw new NotImplementedException();
+            var sql = "SELECT Istrumentnamn, Nivå FROM Musikerinstrument WHERE MusikerId=@Id";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", musiker));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Person>();
+
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        InstrumentNamn = reader.GetSqlString(0).Value,
+                        Nivå = reader.GetSqlInt32(1).Value
+                    };
+
+                    list.Add(person);
+                }
+                return list;
+            }
         }
 
         internal List<Person> VisaMusiker()
         {
-            var sql = "SELECT Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            var sql = "SELECT MusikerId, Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -119,9 +143,10 @@ namespace OrchestreAcademy
                 {
                     var person = new Person
                     {
-                        Förnamn = reader.GetSqlString(0).Value,
-                        Efternamn = reader.GetSqlString(1).Value,
-                        Telefonnummer = reader.GetSqlInt32(2).Value
+                        Id = reader.GetSqlInt32(0).Value,
+                        Förnamn = reader.GetSqlString(1).Value,
+                        Efternamn = reader.GetSqlString(2).Value,
+                        Telefonnummer = reader.GetSqlInt32(3).Value
                     };
 
                     list.Add(person);
