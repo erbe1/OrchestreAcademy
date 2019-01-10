@@ -1,17 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OrchestreAcademy.Domän;
 
 
 namespace OrchestreAcademy
 {
     class SkrivMotor
     {
-     internal void SkrivLista(List<string> list)
+        internal void Skriv(string text = "")
         {
-            foreach (var item in list)
+            Console.WriteLine(text);
+        }
+
+
+        internal void SkrivLista(List<string> list, int j)
+        {
+            int l = 0;
+            for (int i = 0; i < list.Count / j; i++)
             {
-                Skriv(item);
+
+                string s = "";
+                for (int k = 0; k < j; k++)
+                {
+
+                    s = s + list[l].PadRight(40);
+
+                    l++;
+                }
+                Console.WriteLine(s);
             }
         }
 
@@ -20,16 +37,16 @@ namespace OrchestreAcademy
             Rubrik();
 
 
-            Console.WriteLine(@"        ,");
-            Console.WriteLine(@"        |\        __");
-            Console.WriteLine(@"        | |      |--|             __");
-            Console.WriteLine(@"        |/       |  |            |--|");
-            Console.WriteLine(@"       /|_      () ()            | ()");
-            Console.WriteLine(@"      //| \             |\      ()");
-            Console.WriteLine(@"     | \|_ |            | \");
-            Console.WriteLine(@"      \_|_/            ()  |");
-            Console.WriteLine(@"        |                  |");
-            Console.WriteLine(@"       @'                 ()");
+            //Console.WriteLine(@"        ,");
+            //Console.WriteLine(@"        |\        __");
+            //Console.WriteLine(@"        | |      |--|             __");
+            //Console.WriteLine(@"        |/       |  |            |--|");
+            //Console.WriteLine(@"       /|_      () ()            | ()");
+            //Console.WriteLine(@"      //| \             |\      ()");
+            //Console.WriteLine(@"     | \|_ |            | \");
+            //Console.WriteLine(@"      \_|_/            ()  |");
+            //Console.WriteLine(@"        |                  |");
+            //Console.WriteLine(@"       @'                 ()");
 
         }
 
@@ -60,19 +77,14 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Skriv(string text = "")
-        {
-            Console.WriteLine(text);
-        }
-
         internal void Rubrik()
         {
             Console.SetCursorPosition(70, 0);
-            Console.WriteLine("Huvudmeny");
-            Ram();
+            Console.WriteLine(text);
+            //Ram();
         }
 
-        internal void Meny()
+        internal void Meny() 
         {
             Console.SetCursorPosition(70, 35);
             Console.WriteLine("Menyval");

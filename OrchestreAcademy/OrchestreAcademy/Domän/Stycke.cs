@@ -9,5 +9,6 @@ namespace OrchestreAcademy
     public class Stycke
     {
         public string StyckeNamn { get; set; }
+        public string InstrumentNamn { get; set; }
     }
 }
