@@ -13,6 +13,30 @@ namespace OrchestreAcademy
         const int topmarginal = 3;
         const int ramhöjd = 30;
 
+
+        List<string> logga = new List<string>
+            { @"        .",
+              @"        |\        __",
+              @"        | |      |--|             __",
+              @"        |/       |  |            |--|",
+              @"       /|_      () ()            | ()",
+              @"      //| \             |\      ()",
+              @"     | \|_ |            | \",
+              @"      \_|_/            ()  |",
+              @"        |                  |",
+              @"       @'                 ()",
+              @"",
+              @"",
+              @"",
+              @"",
+              @"                  _  __ _  _     /\            _     ",
+              @"                 | |/ /| || |_  |/\|     /\   | |    ",
+              @"                 | ' /_  __  _|         /  \  | |__  ",
+              @"                 |  < _| || |_         / /\ \ | '_ \ ",
+              @"                 | . \_  __  _|       / ____ \| |_) |",
+              @"                 |_|\_\|_||_|        /_/    \_\_.__/ "
+            };
+
         internal void Skriv(string text = "")
         {
             Console.WriteLine(text);
@@ -36,31 +60,25 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Skrivskärm(List<string> menyvalslista)
+        internal void Skrivskärm(List<string> menyvalslista, List<string> raminnehåll = null, int kolumner = 1, string rubrik = "Huvudmeny")
         {
+            if (raminnehåll == null)
+            {
+                raminnehåll = logga;
+            }
             Skärmstorlek();
             Ram();
-            SkrivLista(Logga(), 1);
-            Rubrik("Huvudmeny");
+            SkrivLista(raminnehåll, kolumner);
+            Rubrik(rubrik);
             Meny(menyvalslista);
+
         }
 
-        internal List<string> Logga()
-        {
-            List<string> logga = new List<string>
-            { @"        .",
-              @"        |\        __",
-              @"        | |      |--|             __",
-              @"        |/       |  |            |--|",
-              @"       /|_      () ()            | ()",
-              @"      //| \             |\      ()",
-              @"     | \|_ |            | \",
-              @"      \_|_/            ()  |",
-              @"        |                  |",
-              @"       @'                 ()"
-            };
-            return logga;
-        }
+        //internal List<string> Logga()
+        //{
+
+        //    return logga;
+        //}
 
         internal void Ram()
         {
@@ -93,7 +111,6 @@ namespace OrchestreAcademy
         {
             Console.SetCursorPosition(70, 0);
             Console.WriteLine(text);
-            //Ram();
         }
 
         internal void Meny(List<string> menyvalslista)
@@ -122,7 +139,7 @@ namespace OrchestreAcademy
             Console.BufferWidth = 150;
             Console.BufferHeight = 50;
 
-            Logga();
+            //Logga();
         }
 
     }
