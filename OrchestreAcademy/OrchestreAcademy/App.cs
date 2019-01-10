@@ -35,7 +35,7 @@ namespace OrchestreAcademy
         private void ArrangörMeny()
         {
             //SeAllaEvent();
-            //SeAllaMusiker();
+            SeAllaMusiker();
             //SeAllaStycken();
             //SeSättningar();
             //SkapaEvent();
@@ -52,7 +52,74 @@ namespace OrchestreAcademy
         {
             //Här skrivs musikerlistan ut, på något sätt
             //Det här skrivs in i fältet
-            skrivmotor.Rubrik("Tillgängliga musiker\n");
+            List<string> musikerlista = ListaAllaMusiker();
+            List<string> menyvalslista = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, musikerlista, 4);
+
+
+            //Val i menyn
+            var val = Console.ReadKey(true).Key;
+            switch (val)
+            {
+                case ConsoleKey.A:
+                    Console.Clear();
+                    List<string> musikerlista2 = ListaAllaMusiker();
+                    List<string> menyvalslista2 = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
+                    skrivmotor.Skrivskärm(menyvalslista2, musikerlista2, 2);
+                    VisaInstrumentOchNivåFörEnskildMusiker();
+                    break;
+                case ConsoleKey.B:
+                    Console.Clear();
+                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
+                    break;
+                case ConsoleKey.C:
+                    MusikerMeny();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void VisaInstrumentOchNivåFörEnskildMusiker()
+        {
+            List<string> instrumentochnivålista =  ListaAllaMusiker();
+            List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, instrumentochnivålista, 2);
+
+            var val = Console.ReadKey(true).Key;
+            switch (val)
+            {
+                case ConsoleKey.A:
+                    Console.Clear();
+                    ArrangörMeny();
+                    break;
+                case ConsoleKey.B:
+                    Console.Clear();
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+
+            string musikerval =
+            VisaInstrumentOchNivåFörEnskildMusiker();
+        }
+
+        private List<string> ListaInstrumentOchNivåFörEnskildMusiker()
+        {
+            List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker();
+            List<string> instrumentlistasträng = new List<string>();
+            foreach (var item in instrumentlista)
+            {
+                instrumentlistasträng.Add(item.InstrumentNamn);
+                instrumentlistasträng.Add(item.Nivå.ToString());
+
+            }
+            return instrumentlistasträng;
+        }
+
+        private List<string> ListaAllaMusiker()
+        {
             List<Person> personLista = hämtadata.VisaMusiker();
             List<string> textsträng = new List<string>();
             foreach (var item in personLista)
@@ -60,96 +127,8 @@ namespace OrchestreAcademy
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
                 textsträng.Add(item.Telefonnummer.ToString());
-
             }
-            skrivmotor.SkrivLista(textsträng, 3);
-            Console.WriteLine();
-
-            //menyval och kub
-            List<string> menyvalslista = new List<string> { "x", "y", "z" };
-            skrivmotor.Skrivskärm(menyvalslista);
-            var val = Console.ReadKey(true).Key;
-
-            //Val i menyn
-            switch (val)
-            {
-                case ConsoleKey.A:
-                    Console.Clear();
-
-                    List<Person> instrumentlista = hämtadata.Instrumentlista();
-                    List<string> sträng = new List<string>();
-                    foreach (var item in personLista)
-                    {
-                        textsträng.Add(item.InstrumentNamn);
-                        textsträng.Add(item.Nivå.ToString());
-
-                    }
-                    skrivmotor.SkrivLista(sträng, 2);
-                    Console.WriteLine();
-                    break;
-                case ConsoleKey.B:
-                    Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
-                    break;
-                case ConsoleKey.C:
-                    MusikerMeny();
-                    break;
-                default:
-                    break;
-            }
-
-            // det här ska läggas in i fältet
-
-
-            //Här skulle man vilja ha ett val att välja enskilda musiker för att titta närmare på vad de spelar.
-            //Gärna även ett val att gruppera musiker efter instrument. Allt ska givitvis skrivas
-            
-            
-
-            //SeAllaMusiker();
-
-        }
-
-        private void MenyOchVal()
-        {
-            skrivmotor.Skriv("Gå vidare till:");
-            skrivmotor.Skriv("a) Se instrument och nivå för enskilda musiker");
-            skrivmotor.Skriv("b) Se tillgängliga instrument");
-            skrivmotor.Skriv("c) Tillbaka till musikermenyn\n");
-
-            var val = Console.ReadKey(true).Key;
-
-            switch (val)
-            {
-                case ConsoleKey.A:
-                    Console.Clear();
-                     
-                    List<Person> personLista = hämtadata.VisaMusiker();
-                    List<string> textsträng = new List<string>();
-                    foreach (var item in personLista)
-                    {
-                        textsträng.Add(item.InstrumentNamn);
-                        textsträng.Add(item.Nivå.ToString());
-
-                    }
-                    skrivmotor.SkrivLista(textsträng, 2);
-                    Console.WriteLine();
-                    break;
-                case ConsoleKey.B:
-                    Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
-                    break;
-                case ConsoleKey.C:
-                    MusikerMeny();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void SeEnskildMusiker()
-        {
-            throw new NotImplementedException();
+            return textsträng;
         }
     }
 }

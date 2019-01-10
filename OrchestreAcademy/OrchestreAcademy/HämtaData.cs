@@ -94,9 +94,15 @@ namespace OrchestreAcademy
                 return list;
             }
         }
+
+        internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
+        {
+            throw new NotImplementedException();
+        }
+
         internal List<Person> VisaMusiker()
         {
-            var sql = "SELECT Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            var sql = "SELECT Id, Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
