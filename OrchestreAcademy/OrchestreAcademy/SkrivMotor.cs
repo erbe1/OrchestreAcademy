@@ -50,7 +50,7 @@ namespace OrchestreAcademy
             }
         }
 
-        internal void Skrivskärm(List<string> menyvalslista, List<string> raminnehåll = null, int kolumner = 1)
+        internal void Skrivskärm(List<string> menyvalslista, List<string> raminnehåll = null, int kolumner = 1, string rubrik = "Huvudmeny")
         {
             if (raminnehåll == null)
             {
@@ -59,8 +59,9 @@ namespace OrchestreAcademy
             Skärmstorlek();
             Ram();
             SkrivLista(raminnehåll, kolumner);
-            Rubrik("Huvudmeny");
+            Rubrik(rubrik);
             Meny(menyvalslista);
+
         }
 
         //internal List<string> Logga()
@@ -100,7 +101,6 @@ namespace OrchestreAcademy
         {
             Console.SetCursorPosition(70, 0);
             Console.WriteLine(text);
-            //Ram();
         }
 
         internal void Meny(List<string> menyvalslista)
