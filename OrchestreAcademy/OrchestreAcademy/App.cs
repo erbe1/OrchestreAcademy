@@ -109,7 +109,7 @@ namespace OrchestreAcademy
 
         private void SeMinaEvent()
         {
-            throw new NotImplementedException();
+             throw new NotImplementedException();
         }
 
         private void MusikerMeny()
@@ -182,9 +182,9 @@ namespace OrchestreAcademy
 
  private int Väljmusiker()
         {
-            List<string> musikerlista = ListaAllaMusiker();
+            List<string> musikerlista = MusikerMedId();
             List<string> menyvalslista = new List<string> { "Välj en musiker att titta närmare på! (index)" };
-            skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", musikerlista, 4);
+            skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", musikerlista, 3, false);
             int valmusiker = int.Parse(Console.ReadLine());
             return valmusiker;
 
@@ -239,8 +239,14 @@ namespace OrchestreAcademy
         {
             List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker(musiker);
             List<string> instrumentlistasträng = new List<string>();
+            
             foreach (var item in instrumentlista)
             {
+                if (instrumentlistasträng.Count == 0 )
+                {
+                    instrumentlistasträng.Add("INSTRUMENT");
+                    instrumentlistasträng.Add("NIVÅ");
+                }
                 instrumentlistasträng.Add(item.InstrumentNamn);
                 instrumentlistasträng.Add(item.Nivå.ToString());
 
@@ -254,6 +260,13 @@ namespace OrchestreAcademy
             List<string> textsträng = new List<string>();
             foreach (var item in personLista)
             {
+                if (textsträng.Count == 0)
+                {
+                    textsträng.Add("ID");
+                    textsträng.Add("FÖRNAMN");
+                    textsträng.Add("EFTERNAMN");
+                    textsträng.Add("TELEFONNUMMER");
+                }
                 textsträng.Add(item.Id.ToString());
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
