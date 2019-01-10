@@ -9,6 +9,7 @@ namespace OrchestreAcademy
     public class App
     {
         HämtaData hämtadata = new HämtaData();
+        SkrivMotor skrivmotor = new SkrivMotor();
 
         internal void Kör()
         {
@@ -18,7 +19,8 @@ namespace OrchestreAcademy
         private void Huvudmeny()
         {
             //Skriv ut menyn med snyggfont osv
-
+            skrivmotor.Skärmstorlek();
+            skrivmotor.Meny();
             SeAllaEvent();
             ArrangörMeny();
             MusikerMeny();
