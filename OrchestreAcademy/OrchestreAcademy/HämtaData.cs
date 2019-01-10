@@ -60,8 +60,6 @@ namespace OrchestreAcademy
                 return list;
             }
 
-
-
         }
 
         internal List<Event> VisaAlltIEttEvent(int eventet)
@@ -96,44 +94,64 @@ namespace OrchestreAcademy
             }
         }
 
-        internal string HämtaRubrikFörEttEvent(int nummer)
+        internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
         {
-            string s = "";
-            
-            var sql = "SELECT EventId, Datum, StadNamn FROM Event WHERE EventId=@EventId";
+            var sql = "SELECT Istrumentnamn, Nivå FROM Musikerinstrument WHERE MusikerId=@Id";
+
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 connection.Open();
-                command.Parameters.Add(new SqlParameter("EventId", nummer));
+                command.Parameters.Add(new SqlParameter("Id", musiker));
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                var list = new List<Event>();
+                var list = new List<Person>();
 
 
                 while (reader.Read())
                 {
-                    var e = new Event
-                    {                        
-                        Datum = reader.GetSqlDateTime(1).Value,
-                        StadNamn = reader.GetSqlString(2).Value
+                    var person = new Person
+                    {
+                        InstrumentNamn = reader.GetSqlString(0).Value,
+                        Nivå = reader.GetSqlInt32(1).Value
                     };
-                    list.Add(e);
-                s = e.StadNamn + " " + e.Datum.ToString();
+
+                    list.Add(person);
                 }
+                return list;
             }
-            return s;
         }
 
-        internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
+
+        internal List<Person> MusikerMedId()
         {
-            throw new NotImplementedException();
+            var sql = "SELECT MusikerId, Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                var lista = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        Id = reader.GetSqlInt32(0).Value,
+                        Förnamn = reader.GetSqlString(1).Value,
+                        Efternamn = reader.GetSqlString(2).Value
+                    };
+                    lista.Add(person);
+                }
+                return lista;
+            }
         }
 
         internal List<Person> VisaMusiker()
         {
-            var sql = "SELECT Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
+            var sql = "SELECT MusikerId, Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
 
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -150,14 +168,43 @@ namespace OrchestreAcademy
                 {
                     var person = new Person
                     {
-                        Förnamn = reader.GetSqlString(0).Value,
-                        Efternamn = reader.GetSqlString(1).Value,
-                        Telefonnummer = reader.GetSqlInt32(2).Value
+                        Id = reader.GetSqlInt32(0).Value,
+                        Förnamn = reader.GetSqlString(1).Value,
+                        Efternamn = reader.GetSqlString(2).Value,
+                        Telefonnummer = reader.GetSqlInt32(3).Value
                     };
 
                     list.Add(person);
                 }
                 return list;
+            }
+        }
+
+        internal List<Person> MusikerNamn(int musikerId)
+        {
+            var sql = "SELECT Förnamn, Efternamn FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId WHERE MusikerId=@musikerId";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+                command.Parameters.Add(new SqlParameter("musikerId", musikerId));
+                SqlDataReader reader = command.ExecuteReader();
+
+                var lista = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        Förnamn = reader.GetSqlString(0).Value,
+                        Efternamn = reader.GetSqlString(1).Value,
+                    };
+
+                    lista.Add(person);
+                }
+                return lista;
             }
         }
 
@@ -207,6 +254,35 @@ namespace OrchestreAcademy
                 }
                 return list;
             }
+        }
+internal string HämtaRubrikFörEttEvent(int nummer)
+        {
+            string s = "";
+            
+            var sql = "SELECT EventId, Datum, StadNamn FROM Event WHERE EventId=@EventId";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("EventId", nummer));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Event>();
+
+
+                while (reader.Read())
+                {
+                    var e = new Event
+                    {                        
+                        Datum = reader.GetSqlDateTime(1).Value,
+                        StadNamn = reader.GetSqlString(2).Value
+                    };
+                    list.Add(e);
+                s = e.StadNamn + " " + e.Datum.ToString();
+                }
+            }
+            return s;
         }
     }
 }

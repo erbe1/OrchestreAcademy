@@ -145,40 +145,96 @@ namespace OrchestreAcademy
 
         private void SeMinaEvent()
         {
-            throw new NotImplementedException();
+             throw new NotImplementedException();
         }
 
         private void MusikerMeny()
         {
-            List<string> menyvalslista = new List<string> { "x", "y", "z" };
-            skrivmotor.Skrivskärm(menyvalslista);
+            List<string> menyvalslista = new List<string> { "Vilket är ditt musiker id?" };
 
+            List<string> musikermedid = MusikerMedId();
+
+            skrivmotor.Skrivskärm(menyvalslista, "Musikermeny", musikermedid, 3, false);
+
+            int musikerId = int.Parse(Console.ReadLine());
+            MusikerMenyEfterValAvId(musikerId);
         }
 
-        private void SeAllaMusiker()
+        private void MusikerMenyEfterValAvId(int musikerId)
         {
-            //Här skrivs musikerlistan ut, på något sätt
-            //Det här skrivs in i fältet
-            List<string> musikerlista = ListaAllaMusiker();
-            List<string> menyvalslista = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker", musikerlista, 3);
+            
+            List<string> musikernamn = MusikerNamn(musikerId);
+            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
+
+            
 
 
-            //Val i menyn
             var val = Console.ReadKey();
             int i = int.Parse(val.KeyChar.ToString());
             switch (i)
             {
                 case 1:
-                    Console.Clear();
-                    List<string> musikerlista2 = ListaAllaMusiker();
-                    List<string> menyvalslista2 = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
-                    skrivmotor.Skrivskärm(menyvalslista2, "Musiker att välja på", musikerlista2, 2);
-                    VisaInstrumentOchNivåFörEnskildMusiker();
+                    SeMinaEvent();
                     break;
                 case 2:
-                    Console.Clear();
-                    skrivmotor.SkrivLista(hämtadata.SeTillgängligaInstrument(), 3);
+                    AnmälTillEvent();
+                    break;
+                case 3:
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+
+        private void AnmälTillEvent()
+        {
+            throw new NotImplementedException();
+        }
+        private List<string> MusikerNamn(int musikerId)
+        {
+            List<Person> musikernamnlista = hämtadata.MusikerNamn(musikerId);
+            List<string> musikernamn = new List<string>();
+            foreach (var musiker in musikernamnlista)
+            {
+                musikernamn.Add(musiker.Förnamn);
+                musikernamn.Add(musiker.Efternamn);
+            }
+            return musikernamn;
+        }
+
+        private List<string> MusikerMedId()
+        {
+            List<Person> musikerlista = hämtadata.MusikerMedId();
+            List<string> musikermedid = new List<string>();
+            foreach (var musiker in musikerlista)
+            {
+                musikermedid.Add(musiker.Id.ToString());
+                musikermedid.Add(musiker.Förnamn);
+                musikermedid.Add(musiker.Efternamn);
+            }
+            return musikermedid;
+        }
+
+        private void SeAllaMusiker()
+        {
+            List<string> musikerlista = ListaAllaMusiker();
+            List<string> menyvalslista = new List<string> { "Se instrument och nivå för enskild musiker", "Se tillgängliga instrument", "Tillbaka till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker med kontaktuppgifter", musikerlista, 4);
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    int valmusiker = Väljmusiker();
+                    VisaInstrumentOchNivåFörEnskildMusiker(valmusiker);
+                    break;
+                case 2:
+                    VisaTillgängligaInstrument();
                     break;
                 case 3:
                     Huvudmeny();
@@ -188,9 +244,40 @@ namespace OrchestreAcademy
             }
         }
 
-        private void VisaInstrumentOchNivåFörEnskildMusiker()
+ private int Väljmusiker()
         {
-            List<string> instrumentochnivålista = ListaAllaMusiker();
+            List<string> musikerlista = MusikerMedId();
+            List<string> menyvalslista = new List<string> { "Välj en musiker att titta närmare på! (index)" };
+            skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", musikerlista, 3, false);
+            int valmusiker = int.Parse(Console.ReadLine());
+            return valmusiker;
+
+        }
+
+        private void VisaTillgängligaInstrument()
+        {
+            List<string> instrumentlista = hämtadata.SeTillgängligaInstrument();
+            List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker", instrumentlista, 1);
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    ArrangörMeny();
+                    break;
+                case 2:
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void VisaInstrumentOchNivåFörEnskildMusiker(int musiker)
+        {
+            List<string> instrumentochnivålista =  ListaInstrumentOchNivåFörEnskildMusiker(musiker);
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", instrumentochnivålista, 2);
 
@@ -199,11 +286,9 @@ namespace OrchestreAcademy
             switch (i)
             {
                 case 1:
-                    Console.Clear();
                     ArrangörMeny();
                     break;
                 case 2:
-                    Console.Clear();
                     Huvudmeny();
                     break;
                 default:
@@ -214,12 +299,18 @@ namespace OrchestreAcademy
             //VisaInstrumentOchNivåFörEnskildMusiker();
         }
 
-        private List<string> ListaInstrumentOchNivåFörEnskildMusiker()
+        private List<string> ListaInstrumentOchNivåFörEnskildMusiker(int musiker)
         {
-            List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker();
+            List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker(musiker);
             List<string> instrumentlistasträng = new List<string>();
+            
             foreach (var item in instrumentlista)
             {
+                if (instrumentlistasträng.Count == 0 )
+                {
+                    instrumentlistasträng.Add("INSTRUMENT");
+                    instrumentlistasträng.Add("NIVÅ");
+                }
                 instrumentlistasträng.Add(item.InstrumentNamn);
                 instrumentlistasträng.Add(item.Nivå.ToString());
 
@@ -233,6 +324,14 @@ namespace OrchestreAcademy
             List<string> textsträng = new List<string>();
             foreach (var item in personLista)
             {
+                if (textsträng.Count == 0)
+                {
+                    textsträng.Add("ID");
+                    textsträng.Add("FÖRNAMN");
+                    textsträng.Add("EFTERNAMN");
+                    textsträng.Add("TELEFONNUMMER");
+                }
+                textsträng.Add(item.Id.ToString());
                 textsträng.Add(item.Förnamn);
                 textsträng.Add(item.Efternamn);
                 textsträng.Add(item.Telefonnummer.ToString());
