@@ -94,7 +94,7 @@ namespace OrchestreAcademy
             }
         }
 
-        internal List<Person> InstrumentOchNivåFörEnskildaMusiker()
+        internal List<Person> InstrumentOchNivåFörEnskildaMusiker(int musiker)
         {
             var sql = "SELECT Istrumentnamn, Nivå FROM Musikerinstrument WHERE MusikerId=@Id";
 
