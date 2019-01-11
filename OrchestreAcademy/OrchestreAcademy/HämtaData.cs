@@ -64,7 +64,7 @@ namespace OrchestreAcademy
 
         internal List<Event> VisaAlltIEttEvent(int eventet)
         {
-            var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
+            var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = @EventId";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -146,6 +146,24 @@ namespace OrchestreAcademy
                     lista.Add(person);
                 }
                 return lista;
+            }
+        }
+
+        internal void TaBortEvent(int eventId)
+        {
+            var sql = @"DELETE FROM Bokningar
+                        WHERE EventId=@Id
+                        DELETE FROM Event 
+                        WHERE EventId=@Id";
+
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", eventId));
+                command.ExecuteNonQuery();
             }
         }
 
