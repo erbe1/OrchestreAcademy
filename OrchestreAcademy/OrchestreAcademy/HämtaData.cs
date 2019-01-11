@@ -64,7 +64,7 @@ namespace OrchestreAcademy
 
         internal List<Event> VisaAlltIEttEvent(int eventet)
         {
-            var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
+            var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId =@EventId";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
@@ -146,6 +146,61 @@ namespace OrchestreAcademy
                     lista.Add(person);
                 }
                 return lista;
+            }
+        }
+
+        internal void LäggtillEvent(Event eventet)
+        {
+            var sql = "INSERT INTO Event VALUES (@StadNamn, @Datum)";
+            var sql2 = "INSERT INTO Stad (StadsNamn)VALUES (@StadNamn)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command2 = new SqlCommand(sql2, connection))
+            {
+                connection.Open();
+
+                command2.Parameters.Add(new SqlParameter("StadNamn", eventet.StadNamn));
+                
+
+                try
+                {
+                    command2.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+                }
+
+                connection.Close();
+                command.Parameters.Add(new SqlParameter("StadNamn", eventet.StadNamn));
+                command.Parameters.Add(new SqlParameter("Datum", eventet.Datum));
+                connection.Open();
+                command.ExecuteNonQuery();
+
+
+            }
+        }
+
+        internal List<string> VisaAllaStycken()
+        {
+            var sql = "SELECT StyckeNamn FROM Stycken";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<string>();
+
+
+                while (reader.Read())
+                {
+                    list.Add(reader.GetSqlString(0).Value);
+                }
+                return list;
             }
         }
 

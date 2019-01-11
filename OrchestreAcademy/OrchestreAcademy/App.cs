@@ -56,8 +56,8 @@ namespace OrchestreAcademy
             bool korrektval = false;
             do
             {
-            skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false );
-            string val = new string("");
+                skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false);
+                string val = new string("");
 
                 val = Console.ReadLine().ToLower().Trim();
                 int nummer = new int();
@@ -103,7 +103,7 @@ namespace OrchestreAcademy
                 case 2:
                     Huvudmeny();
                     break;
-                
+
                 default:
                     break;
             }
@@ -140,12 +140,30 @@ namespace OrchestreAcademy
 
         private void SkapaEvent()
         {
-            throw new NotImplementedException();
+            List<string> menyvalslista = new List<string> { "I vilken stad skall eventet vara?" };
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            Event eventet = new Event();
+            eventet.StadNamn = Console.ReadLine();
+            menyvalslista[0] = "Vilket datum skall eventet vara (Ange datum i formatet 1900-01-01)?";
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            string datum = Console.ReadLine();
+            menyvalslista[0] = "Vilken tid skall eventet vara (Ange tid i formatet 20:00)?";
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            string tid = Console.ReadLine();
+            eventet.Datum = DateTime.Parse(datum + " " + tid);
+            hämtadata.LäggtillEvent(eventet);
+            ArrangörMeny();
+            //menyvalslista[0] = "Välj ett stycke att lägga till eventet";
+            //List<string> stycken = hämtadata.VisaAllaStycken();
+
+
+
+
         }
 
         private void SeMinaEvent()
         {
-             throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void MusikerMeny()
@@ -162,12 +180,12 @@ namespace OrchestreAcademy
 
         private void MusikerMenyEfterValAvId(int musikerId)
         {
-            
+
             List<string> musikernamn = MusikerNamn(musikerId);
             List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
 
-            
+
 
 
             var val = Console.ReadKey();
@@ -244,7 +262,7 @@ namespace OrchestreAcademy
             }
         }
 
- private int Väljmusiker()
+        private int Väljmusiker()
         {
             List<string> musikerlista = MusikerMedId();
             List<string> menyvalslista = new List<string> { "Välj en musiker att titta närmare på! (index)" };
@@ -277,7 +295,7 @@ namespace OrchestreAcademy
 
         private void VisaInstrumentOchNivåFörEnskildMusiker(int musiker)
         {
-            List<string> instrumentochnivålista =  ListaInstrumentOchNivåFörEnskildMusiker(musiker);
+            List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", instrumentochnivålista, 2);
 
@@ -303,10 +321,10 @@ namespace OrchestreAcademy
         {
             List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker(musiker);
             List<string> instrumentlistasträng = new List<string>();
-            
+
             foreach (var item in instrumentlista)
             {
-                if (instrumentlistasträng.Count == 0 )
+                if (instrumentlistasträng.Count == 0)
                 {
                     instrumentlistasträng.Add("INSTRUMENT");
                     instrumentlistasträng.Add("NIVÅ");
