@@ -149,6 +149,61 @@ namespace OrchestreAcademy
             }
         }
 
+        internal void LäggtillEvent(Event eventet)
+        {
+            var sql = "INSERT INTO Event VALUES (@StadNamn, @Datum)";
+            var sql2 = "INSERT INTO Stad (StadsNamn)VALUES (@StadNamn)";
+
+            using (SqlConnection connection = new SqlConnection(conString))
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlCommand command2 = new SqlCommand(sql2, connection))
+            {
+                connection.Open();
+
+                command2.Parameters.Add(new SqlParameter("StadNamn", eventet.StadNamn));
+                
+
+                try
+                {
+                    command2.ExecuteNonQuery();
+                }
+                catch (SqlException)
+                {
+                }
+
+                connection.Close();
+                command.Parameters.Add(new SqlParameter("StadNamn", eventet.StadNamn));
+                command.Parameters.Add(new SqlParameter("Datum", eventet.Datum));
+                connection.Open();
+                command.ExecuteNonQuery();
+
+
+            }
+        }
+
+        internal List<string> VisaAllaStycken()
+        {
+            var sql = "SELECT StyckeNamn FROM Stycken";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<string>();
+
+
+                while (reader.Read())
+                {
+                    list.Add(reader.GetSqlString(0).Value);
+                }
+                return list;
+            }
+        }
+
         internal List<Person> VisaMusiker()
         {
             var sql = "SELECT MusikerId, Förnamn, Efternamn, TelefonNummer FROM Person JOIN Musiker ON Musiker.PersonId=Person.PersonId";
@@ -310,6 +365,23 @@ namespace OrchestreAcademy
                     list.Add(reader.GetSqlString(0).Value);
                 }
                 return list;
+            }
+        }
+ internal void TaBortEvent(int eventId)
+        {
+            var sql = @"DELETE FROM Bokningar
+                        WHERE EventId=@Id
+                        DELETE FROM Event 
+                        WHERE EventId=@Id";
+
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Id", eventId));
+                command.ExecuteNonQuery();
             }
         }
 internal string HämtaRubrikFörEttEvent(int nummer)

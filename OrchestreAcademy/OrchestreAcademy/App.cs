@@ -112,7 +112,7 @@ namespace OrchestreAcademy
 
         private void ArrangörMeny()
         {
-            List<string> menyvalslista = new List<string> { "Se mina event", "Skapa nytt event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
+            List<string> menyvalslista = new List<string> { "Se alla event", "Skapa nytt event", "Ta bort event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Arrangörsmeny");
 
             var val = Console.ReadKey();
@@ -120,15 +120,18 @@ namespace OrchestreAcademy
             switch (i)
             {
                 case 1:
-                    SeMinaEvent();
+                    SeAllaEvent();
                     break;
                 case 2:
                     SkapaEvent();
                     break;
                 case 3:
-                    SeAllaMusiker();
+                    TaBortEvent();
                     break;
                 case 4:
+                    SeAllaMusiker();
+                    break;
+                case 5:
                     Huvudmeny();
                     break;
                 default:
@@ -138,9 +141,77 @@ namespace OrchestreAcademy
 
         }
 
+        private void TaBortEvent()
+        {
+            List<string> menyvalslista = new List<string> { "Vilket event vill du ta bort? (ange index)" };
+            List<Event> eventlista = hämtadata.VisaAllaEvent();
+            List<string> textsträng = new List<string>();
+            foreach (var item in eventlista)
+            {
+                if (textsträng.Count == 0)
+                {
+                    textsträng.Add("EVENT");
+                    textsträng.Add("STAD");
+                    textsträng.Add("DATUM");
+                }
+
+                textsträng.Add(item.EventId.ToString());
+                textsträng.Add(item.StadNamn);
+                textsträng.Add(item.Datum.ToString());
+            }
+            skrivmotor.Skrivskärm(menyvalslista, "Ta Bort Event", textsträng, 3, false);
+
+            int eventId = int.Parse(Console.ReadLine());
+
+                hämtadata.TaBortEvent(eventId);
+
+            EventBorttagetMeny();
+
+        }
+
+        private void EventBorttagetMeny()
+        {
+            List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmenyn", "Tillbaka till huvudmenyn" };
+            List<string> textsträng = new List<string>() { "VALT EVENT BORTTAGET" };
+            skrivmotor.Skrivskärm(menyvalslista, "Ta Bort Event", textsträng);
+
+
+            var val = Console.ReadKey();
+            int i = int.Parse(val.KeyChar.ToString());
+            switch (i)
+            {
+                case 1:
+                    ArrangörMeny();
+                    break;
+                case 2:
+                    Huvudmeny();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void SkapaEvent()
         {
-            throw new NotImplementedException();
+            List<string> menyvalslista = new List<string> { "I vilken stad skall eventet vara?" };
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            Event eventet = new Event();
+            eventet.StadNamn = Console.ReadLine();
+            menyvalslista[0] = "Vilket datum skall eventet vara (Ange datum i formatet 1900-01-01)?";
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            string datum = Console.ReadLine();
+            menyvalslista[0] = "Vilken tid skall eventet vara (Ange tid i formatet 20:00)?";
+            skrivmotor.Skrivskärm(menyvalslista, "Skapa event", null, 1, false);
+            string tid = Console.ReadLine();
+            eventet.Datum = DateTime.Parse(datum + " " + tid);
+            hämtadata.LäggtillEvent(eventet);
+            ArrangörMeny();
+            //menyvalslista[0] = "Välj ett stycke att lägga till eventet";
+            //List<string> stycken = hämtadata.VisaAllaStycken();
+
+
+
+
         }
 
         private void SeMinaEvent()
@@ -166,8 +237,11 @@ namespace OrchestreAcademy
             List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
 
             List<string> musikernamn = MusikerNamn(musikerId);
-            List<string> menyvalslista = new List<string> { "Uppdatera instrumentnivå", "Anmäl dig till event", "Återgå till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2);
+            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
+
+            
+
 
             var val = Console.ReadKey();
             int i = int.Parse(val.KeyChar.ToString());
@@ -337,9 +411,19 @@ namespace OrchestreAcademy
 
         private void VisaTillgängligaInstrument()
         {
-            List<string> instrumentlista = hämtadata.SeTillgängligaInstrument();
+            List<string> lista = hämtadata.SeTillgängligaInstrument();
+            List<string> textsträng = new List<string>();
+            foreach (var item in lista)
+            {
+                if (textsträng.Count == 0)
+                {
+                    textsträng.Add("INSTRUMENT");
+                }
+                textsträng.Add(item);
+            }
+
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker", instrumentlista, 1);
+            skrivmotor.Skrivskärm(menyvalslista, "Alla musiker", textsträng, 1);
 
             var val = Console.ReadKey();
             int i = int.Parse(val.KeyChar.ToString());
@@ -375,9 +459,6 @@ namespace OrchestreAcademy
                 default:
                     break;
             }
-
-            //int musikerval = int.Parse(Console.ReadLine());
-            //VisaInstrumentOchNivåFörEnskildMusiker();
         }
 
         private List<string> ListaInstrumentOchNivåFörEnskildMusiker(int musiker)
