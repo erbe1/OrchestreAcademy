@@ -56,8 +56,8 @@ namespace OrchestreAcademy
             bool korrektval = false;
             do
             {
-            skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false );
-            string val = new string("");
+                skrivmotor.Skrivskärm(menyvalslista, "Alla Event", textsträng, 3, false);
+                string val = new string("");
 
                 val = Console.ReadLine().ToLower().Trim();
                 int nummer = new int();
@@ -103,7 +103,7 @@ namespace OrchestreAcademy
                 case 2:
                     Huvudmeny();
                     break;
-                
+
                 default:
                     break;
             }
@@ -145,7 +145,7 @@ namespace OrchestreAcademy
 
         private void SeMinaEvent()
         {
-             throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void MusikerMeny()
@@ -162,20 +162,19 @@ namespace OrchestreAcademy
 
         private void MusikerMenyEfterValAvId(int musikerId)
         {
-            
+            int musiker = musikerId;
+            List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
+
             List<string> musikernamn = MusikerNamn(musikerId);
-            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
-
-            
-
+            List<string> menyvalslista = new List<string> { "Uppdatera instrumentnivå", "Anmäl dig till event", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2);
 
             var val = Console.ReadKey();
             int i = int.Parse(val.KeyChar.ToString());
             switch (i)
             {
                 case 1:
-                    SeMinaEvent();
+                    UppdateraInstrumentNivå(musikerId);
                     break;
                 case 2:
                     AnmälTillEvent();
@@ -189,6 +188,80 @@ namespace OrchestreAcademy
 
         }
 
+        private void UppdateraInstrumentNivå(int musikerId)
+        {
+            int musiker = musikerId;
+            string valavinstrument = "";
+            List<string> musikernamn = MusikerNamn(musikerId);
+            List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
+            List<Person> musikerinstrument = hämtadata.Musikerinstrument(musiker);
+            List<string> menyvalslista = new List<string> { "För vilket instrument vill du uppdatera nivån?         (B)acka" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+            valavinstrument = Console.ReadLine();
+
+            if (valavinstrument == "b" || valavinstrument == "B")
+            {
+                MusikerMenyEfterValAvId(musiker);
+            }
+            else
+            {
+                FinnsInstrumentet(valavinstrument, musiker, musikernamn, instrumentochnivålista);
+            }
+
+        }
+
+        private void FinnsInstrumentet(string valavinstrument, int musiker, List<string> musikernamn, List<string> instrumentochnivålista)
+        {
+            bool finnsInstrument = hämtadata.FinnsInstrument(valavinstrument, musiker);
+            List<string> menyvalslista;
+            if (finnsInstrument)
+            {
+                TillVilkenNivåSkaInstrumentetUppdateras(valavinstrument, musiker, musikernamn, instrumentochnivålista);
+            }
+            else
+            {
+                menyvalslista = new List<string> { $"Felaktig inmatning, finns inget instrument '{valavinstrument}'." };
+                skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+                Console.ReadKey();
+
+                UppdateraInstrumentNivå(musiker);
+            }
+
+        }
+
+        private void TillVilkenNivåSkaInstrumentetUppdateras(string valavinstrument, int musiker, List<string> musikernamn, List<string> instrumentochnivålista)
+        {
+            int nivå = 0;
+            List<string> menyvalslista;
+            menyvalslista = new List<string> { $"Till vilken nivå vill du ändra {valavinstrument}?" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+            nivå = int.Parse(Console.ReadLine());
+
+            if (nivå > 5 && nivå != 666)
+            {
+                menyvalslista = new List<string> { $"Bra försök {musikernamn[0]}! Men så duktig är ingen. Nivå 5 är max." };
+                skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+                Console.ReadKey();
+                MusikerMenyEfterValAvId(musiker);
+            }
+            else if (nivå == 666)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                menyvalslista = new List<string> { $"DU ÄR DJÄVULSKT BRA!" };
+                skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+                Console.ReadKey();
+                Console.ResetColor();
+                MusikerMenyEfterValAvId(musiker);
+            }
+            else
+            {
+                hämtadata.UppdateraNivå(nivå, musiker, valavinstrument);
+                menyvalslista = new List<string> { $"{valavinstrument} kommer uppdateras till nivå {nivå}" };
+                skrivmotor.Skrivskärm(menyvalslista, $"Instrument och nivå för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2, false);
+                Console.ReadKey();
+                MusikerMenyEfterValAvId(musiker);
+            }
+        }
 
         private void AnmälTillEvent()
         {
@@ -212,6 +285,14 @@ namespace OrchestreAcademy
             List<string> musikermedid = new List<string>();
             foreach (var musiker in musikerlista)
             {
+                if (musikermedid.Count == 0)
+                {
+                    musikermedid.Add("ID");
+                    musikermedid.Add("Förnamn");
+                    musikermedid.Add("Efternamn");
+                }
+
+
                 musikermedid.Add(musiker.Id.ToString());
                 musikermedid.Add(musiker.Förnamn);
                 musikermedid.Add(musiker.Efternamn);
@@ -244,7 +325,7 @@ namespace OrchestreAcademy
             }
         }
 
- private int Väljmusiker()
+        private int Väljmusiker()
         {
             List<string> musikerlista = MusikerMedId();
             List<string> menyvalslista = new List<string> { "Välj en musiker att titta närmare på! (index)" };
@@ -277,7 +358,7 @@ namespace OrchestreAcademy
 
         private void VisaInstrumentOchNivåFörEnskildMusiker(int musiker)
         {
-            List<string> instrumentochnivålista =  ListaInstrumentOchNivåFörEnskildMusiker(musiker);
+            List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
             List<string> menyvalslista = new List<string> { "Tillbaka till arrangörmeny", "Tillbaka till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Instrument och nivå", instrumentochnivålista, 2);
 
@@ -303,10 +384,10 @@ namespace OrchestreAcademy
         {
             List<Person> instrumentlista = hämtadata.InstrumentOchNivåFörEnskildaMusiker(musiker);
             List<string> instrumentlistasträng = new List<string>();
-            
+
             foreach (var item in instrumentlista)
             {
-                if (instrumentlistasträng.Count == 0 )
+                if (instrumentlistasträng.Count == 0)
                 {
                     instrumentlistasträng.Add("INSTRUMENT");
                     instrumentlistasträng.Add("NIVÅ");

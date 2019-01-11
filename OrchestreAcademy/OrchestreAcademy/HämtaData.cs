@@ -208,6 +208,63 @@ namespace OrchestreAcademy
             }
         }
 
+        internal bool FinnsInstrument(string valavinstrument, int musiker)
+        {
+            var sql = "SELECT Istrumentnamn FROM MusikerInstrument WHERE MusikerId=@musikerId AND Istrumentnamn=@val";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("musikerId", musiker));
+                command.Parameters.Add(new SqlParameter("val", valavinstrument));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                bool finninstrument = reader.Read();
+                return finninstrument;
+            }
+        }
+
+        internal void UppdateraNivå(int nivå, int musiker, string valavinstrument)
+        {
+            var sql = "UPDATE MusikerInstrument SET Nivå=@Nivå WHERE MusikerId=@MusikerId AND Istrumentnamn=@val";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("Nivå", nivå));
+                command.Parameters.Add(new SqlParameter("MusikerId", musiker));
+                command.Parameters.Add(new SqlParameter("val", valavinstrument));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        internal List<Person> Musikerinstrument(int musiker)
+        {
+            var sql = "SELECT Istrumentnamn FROM MusikerInstrument WHERE MusikerId=@musikerId";
+            using (SqlConnection connection = new SqlConnection(conString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                connection.Open();
+                command.Parameters.Add(new SqlParameter("musikerId", musiker));
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                var list = new List<Person>();
+
+                while (reader.Read())
+                {
+                    var person = new Person
+                    {
+                        InstrumentNamn = reader.GetSqlString(0).Value
+                    };
+
+                    list.Add(person);
+                }
+                return list;
+            }
+        }
+
         internal List<Person> SeEnskildMusiker()
         {
             var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
