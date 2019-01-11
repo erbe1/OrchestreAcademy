@@ -237,8 +237,8 @@ namespace OrchestreAcademy
             List<string> instrumentochnivålista = ListaInstrumentOchNivåFörEnskildMusiker(musiker);
 
             List<string> musikernamn = MusikerNamn(musikerId);
-            List<string> menyvalslista = new List<string> { "Se mina event", "Anmäl dig till event", "Återgå till huvudmeny" };
-            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}");
+            List<string> menyvalslista = new List<string> { "Uppdatera instrumentnivå", "Anmäl dig till event", "Återgå till huvudmeny" };
+            skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2);
 
             
 
