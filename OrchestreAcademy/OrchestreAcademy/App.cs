@@ -112,7 +112,7 @@ namespace OrchestreAcademy
 
         private void ArrangörMeny()
         {
-            List<string> menyvalslista = new List<string> { "Se mina event", "Skapa nytt event", "Ta bort event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
+            List<string> menyvalslista = new List<string> { "Se alla event", "Skapa nytt event", "Ta bort event", "Se tillgängliga musiker", "Återgå till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, "Arrangörsmeny");
 
             var val = Console.ReadKey();
@@ -120,7 +120,7 @@ namespace OrchestreAcademy
             switch (i)
             {
                 case 1:
-                    SeMinaEvent();
+                    SeAllaEvent();
                     break;
                 case 2:
                     SkapaEvent();
