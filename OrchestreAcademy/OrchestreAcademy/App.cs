@@ -339,7 +339,10 @@ namespace OrchestreAcademy
 
         private void AnmälTillEvent()
         {
-            throw new NotImplementedException();
+            List<string> menyvalslista = new List<string> { "Tyvärr ej implementerat än. Satsa på att öva på dina instrument istället!" };
+            skrivmotor.Skrivskärm(menyvalslista, "Tillgängliga event", null, 1, false);
+            Console.ReadKey();
+            Huvudmeny();
         }
         private List<string> MusikerNamn(int musikerId)
         {
