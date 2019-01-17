@@ -26,7 +26,7 @@ namespace OrchestreAcademy
                 var list = new List<string>();
 
                 while (reader.Read())
-                {                 
+                {
                     list.Add(reader.GetSqlString(0).Value);
                 }
                 return list;
@@ -162,7 +162,7 @@ namespace OrchestreAcademy
                 connection.Open();
 
                 command2.Parameters.Add(new SqlParameter("StadNamn", eventet.StadNamn));
-                
+
 
                 try
                 {
@@ -213,7 +213,7 @@ namespace OrchestreAcademy
             {
                 connection.Open();
 
-                        
+
                 SqlDataReader reader = command.ExecuteReader();
 
                 var list = new List<Person>();
@@ -367,7 +367,7 @@ namespace OrchestreAcademy
                 return list;
             }
         }
- internal void TaBortEvent(int eventId)
+        internal void TaBortEvent(int eventId)
         {
             var sql = @"DELETE FROM Bokningar
                         WHERE EventId=@Id
@@ -384,10 +384,10 @@ namespace OrchestreAcademy
                 command.ExecuteNonQuery();
             }
         }
-internal string HämtaRubrikFörEttEvent(int nummer)
+        internal string HämtaRubrikFörEttEvent(int nummer)
         {
             string s = "";
-            
+
             var sql = "SELECT EventId, Datum, StadNamn FROM Event WHERE EventId=@EventId";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))
@@ -403,12 +403,12 @@ internal string HämtaRubrikFörEttEvent(int nummer)
                 while (reader.Read())
                 {
                     var e = new Event
-                    {                        
+                    {
                         Datum = reader.GetSqlDateTime(1).Value,
                         StadNamn = reader.GetSqlString(2).Value
                     };
                     list.Add(e);
-                s = e.StadNamn + " " + e.Datum.ToString();
+                    s = e.StadNamn + " " + e.Datum.ToString();
                 }
             }
             return s;

@@ -145,9 +145,9 @@ namespace OrchestreAcademy
             Console.SetWindowPosition(0, 0);
             Console.Clear();
             Console.Title = "K# ^ Ab";
-            Console.SetWindowSize(150, 50);
-            Console.BufferWidth = 150;
-            Console.BufferHeight = 50;
+            //Console.SetWindowSize(150, 50);
+            //Console.BufferWidth = 150;
+            //Console.BufferHeight = 50;
         }
 
     }
