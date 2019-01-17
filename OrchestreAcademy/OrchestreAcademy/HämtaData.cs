@@ -63,7 +63,7 @@ namespace OrchestreAcademy
         }
 
         internal List<Event> VisaAlltIEttEvent(int eventet)
-        {
+        {                           //TODO: SQL-uttrycket får gärna delas upp på fler rader för att bli mer lättläst.
             var sql = "SELECT Bokningar.StyckeNamn, Person.Förnamn, Person.Efternamn, InstrumentNamn FROM Bokningar JOIN Musiker ON Bokningar.MusikerId=Musiker.MusikerId JOIN Person ON Musiker.PersonId=Person.PersonId WHERE Bokningar.EventId = 1";
             using (SqlConnection connection = new SqlConnection(conString))
             using (SqlCommand command = new SqlCommand(sql, connection))

@@ -7,6 +7,24 @@ using OrchestreAcademy.Domän;
 
 namespace OrchestreAcademy
 {
+
+    //Kritisk Användare:
+    //TODO: Ingen validering vid val av event, man kan skriva in event-Id som ej finns
+    //TODO: Validering för inmatning vid nytt event. Om man bara skriver årtal och sen skriver tidpunkt så tar den tidpunkten som månad. MEN om man skriver datum fel (bara år) och tidpunkt korrekt kraschar det.
+    //TODO: Trycker man enter kraschar det
+    //TODO: Om musiker ska anmäla sig till event kommer man till återvändsgränd, det står ange ditt val men man har inget att välja på
+    //TODO: När man ska ändra nivå på instrument anger man vilket instrument och vilken nivå, sen ber den om ett nytt val utan att ge alternativ
+    //TODO: När man ska ange instrument att uppdatera nivå på hade det varit bra med Id även där för att hålla konsekventa menyval (då man har det innan)
+
+    //Snäll Användare:
+    //GOOD: Tydliga menyer
+    //GOOD: Tydligt att se t.ex. vilken musiker man är inne på då det står högst upp.
+    //GOOD: Konsekvent och trevlig fyrkant
+    //GOOD: Bra avgränsad, tydligt vad den kan göra.
+
+    //Kritisk kodare:
+    //TODO: Enhetligt språk, allt som skrivs ut på svenska men övrigt på engelska
+
     public class App
     {
         HämtaData hämtadata = new HämtaData();
@@ -163,7 +181,7 @@ namespace OrchestreAcademy
 
             int eventId = int.Parse(Console.ReadLine());
 
-                hämtadata.TaBortEvent(eventId);
+            hämtadata.TaBortEvent(eventId);
 
             EventBorttagetMeny();
 
@@ -240,7 +258,7 @@ namespace OrchestreAcademy
             List<string> menyvalslista = new List<string> { "Uppdatera instrumentnivå", "Anmäl dig till event", "Återgå till huvudmeny" };
             skrivmotor.Skrivskärm(menyvalslista, $"Musikermeny för {musikernamn[0]} {musikernamn[1]}", instrumentochnivålista, 2);
 
-            
+
 
 
             var val = Console.ReadKey();

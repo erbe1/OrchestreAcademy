@@ -73,7 +73,7 @@ namespace OrchestreAcademy
 
         }
 
-        internal void Ram()
+        internal void Ram() //TODO: Förslag på namn RitaRam för tydlighet
         {
             
             Console.SetCursorPosition(vänstermarginal, topmarginal);
@@ -140,7 +140,7 @@ namespace OrchestreAcademy
 
         }
 
-        internal void Skärmstorlek()
+        internal void Skärmstorlek() //TODO: Förslag på namn SättSkärmStorlek för tydlighet
         {
             Console.SetWindowPosition(0, 0);
             Console.Clear();
